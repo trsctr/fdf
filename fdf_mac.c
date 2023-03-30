@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_draw.c                                         :+:      :+:    :+:   */
+/*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trsctr <trsctr@student.42.fr>              +#+  +:+       +#+        */
+/*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/15 15:53:04 by oandelin          #+#    #+#             */
-/*   Updated: 2023/03/24 10:15:12 by trsctr           ###   ########.fr       */
+/*   Created: 2023/03/03 17:10:59 by oandelin          #+#    #+#             */
+/*   Updated: 2023/03/15 18:12:48 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <stdio.h>
+#include <string.h>
 
-void	pixel_to_img(t_img *image, int x, int y, int color)
-{
-	char	*pxl;
 
-	pxl = image->addr + (y * image->line_len + x * (image->bpp / 8 ));
-	*(unsigned int *)pxl = color;
-}
+// int close(int keycode, s_data data)
+// {
+// 	mlx_destroy_window(data.mlx_ptr, data.win_ptr);
+// 	return(0);
+// }
 
 int draw_line (t_img image, t_line line, int color)
 {
@@ -92,4 +93,42 @@ void draw_rect (t_img image, int x, int y, int w, int h)
 	draw_line(image, vline1, 0x0000FF00);
 	draw_line(image, hline2, 0x000000FF);
 	draw_line(image, vline2, 0x00FFFF00);
+}
+
+
+int	key_hook(int keycode, t_window *window)
+{
+	mlx_destroy_window(window->mlx_ptr, window->win_ptr);
+	printf("hihi\n");
+	exit(0);
+}
+
+int	main(void)
+{
+	t_window	window;
+	t_line		line;
+	t_img		image;
+
+	line.x_start = 410;
+	line.y_start = 360;
+	line.x_end = 60;
+	line.y_end = 90;
+	window = new_window(640, 480, "joo");
+	if (!window.mlx_ptr || !window.win_ptr)
+		return (MLX_ERROR);
+	image = new_image(640, 480, window);
+	draw_line(image, line, 0x00FF00);
+	draw_rect(image, 40, 40, 250, 240);
+	bresenham(image, 610, 300, 60, 90);
+	
+	mlx_put_image_to_window(window.mlx_ptr, window.win_ptr, image.img_ptr, 0, 0);
+	printf("Let's Find out what's inside our structure :D\n");
+	printf("img_ptr		: [%p]\n", image.img_ptr);
+	printf("bpp		: [%d]\n", image.bpp);
+	printf("line_len	: [%d]\n", image.line_len);
+	printf("endian		: [%d]\n", image.endian);
+	printf("addr		: [%s]\n", image.addr);
+	mlx_key_hook(window.win_ptr, key_hook, &window);
+	mlx_loop(window.mlx_ptr);
+
 }
