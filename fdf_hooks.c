@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf_hooks.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trsctr <trsctr@student.42.fr>              +#+  +:+       +#+        */
+/*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 12:16:21 by trsctr            #+#    #+#             */
-/*   Updated: 2023/03/24 10:15:12 by trsctr           ###   ########.fr       */
+/*   Updated: 2023/03/30 15:06:39 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,20 @@ int	handle_no_event(void *data)
 
 int	handle_keypress(int keysym, t_window *window)
 {
-	if (keysym == XK_Escape)
+	ft_printf("Keypress: %d\n", keysym);
+	if (keysym == 53)
+	{	
 		mlx_destroy_window(window->mlx_ptr, window->win_ptr);
-
-	printf("Keypress: %d\n", keysym);
+		ft_printf("lol imma exit\n");
+		free(window->matrix);
+		exit(0);}
 	return (0);
 }
 
 int	handle_keyrelease(int keysym, void *data)
 {
 	printf("Keyrelease: %d\n", keysym);
+
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trsctr <trsctr@student.42.fr>              +#+  +:+       +#+        */
+/*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:49:04 by oandelin          #+#    #+#             */
-/*   Updated: 2023/03/30 12:34:57 by trsctr           ###   ########.fr       */
+/*   Updated: 2023/03/30 15:05:52 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,14 @@
 # include <stdlib.h>
 # include <mlx.h>
 # include <math.h>
-# include <X11/keysym.h>
-# include <X11/X.h>
+// # include <X11/keysym.h>
+// # include <X11/X.h>
 # define MLX_ERROR 1
 
 typedef struct s_window {
 	void		*mlx_ptr;
 	void		*win_ptr;
+	int			**matrix;
 	int			width;
 	int			height;
 }	t_window;
@@ -55,7 +56,7 @@ t_img		new_image(int w, int h, t_window window);
 
 // #### PARSING
 
-void parse_map(int fd);
+int **parse_map(int fd);
 char *read_map(char *mapbuf, int fd);
 int *convert_array(char **strarray);
 

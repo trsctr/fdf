@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   fdf_parse_map.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trsctr <trsctr@student.42.fr>              +#+  +:+       +#+        */
+/*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 10:38:51 by trsctr            #+#    #+#             */
-/*   Updated: 2023/03/24 18:26:12 by trsctr           ###   ########.fr       */
+/*   Updated: 2023/03/30 15:02:34 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 
-void parse_map(int fd)
+int **parse_map(int fd)
 {
     char    *mapbuf;
     char    **lines;
@@ -33,6 +33,7 @@ void parse_map(int fd)
         free(split_line);
         i++;
     }
+	return(matrix);
 }
 
 char *read_map(char *mapbuf, int fd)

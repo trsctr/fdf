@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_parse.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trsctr <trsctr@student.42.fr>              +#+  +:+       +#+        */
+/*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:55:55 by oandelin          #+#    #+#             */
-/*   Updated: 2023/03/23 12:01:35 by trsctr           ###   ########.fr       */
+/*   Updated: 2023/03/30 15:23:19 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	check_specifier(const char *format, va_list args, int i)
 		return (convert_p(va_arg(args, void *)));
 	else if (format[i] == '%')
 		return (ft_putchar_fd('%', 1));
-	return (0);
+	return (ft_putchar_fd(format[i], 1));
 }
 
 int	parse_format(const char *format, va_list args)

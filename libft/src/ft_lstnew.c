@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/27 11:07:08 by oandelin          #+#    #+#             */
-/*   Updated: 2022/12/09 17:05:01 by oandelin         ###   ########.fr       */
+/*   Created: 2022/12/13 12:25:31 by oandelin          #+#    #+#             */
+/*   Updated: 2022/12/13 14:51:41 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// ft_isalnum
-// checks if c is alphanumeric character in the ASCII chart
-// yes = 1
-// no = 0
-int	ft_isalnum(int c)
+// ft_lstnew
+// allocates and returns a new node
+// member variable 'content' is initialized with the velue 'content'
+// 'next' is initialized to NULL
+t_list	*ft_lstnew(void *content)
 {
-	if (ft_isdigit(c))
-		return (1);
-	if (ft_isalpha(c))
-		return (1);
+	t_list	*node;
+
+	node = (t_list *)malloc(sizeof(t_list));
+	if (!node)
+		return (NULL);
+	if (!content)
+		node->content = NULL;
 	else
-		return (0);
+		node->content = content;
+	node->next = NULL;
+	return (node);
 }

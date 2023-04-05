@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_convert_hex.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trsctr <trsctr@student.42.fr>              +#+  +:+       +#+        */
+/*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:43:44 by oandelin          #+#    #+#             */
-/*   Updated: 2023/03/23 08:24:50 by trsctr           ###   ########.fr       */
+/*   Updated: 2023/04/04 21:15:06 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ int	printhex(unsigned long n, char c)
 	int	i;
 
 	i = 0;
-	//if (n < 0)
-	//	n = ULONG_MAX + n + 1;
 	if (n > 15)
 	{
 		i += printhex(n / 16, c);
@@ -35,8 +33,6 @@ int	convert_x(unsigned int n, char c)
 {
 	int	ret;
 
-	//if (n < 0)
-	//	n = UINT_MAX - n + 1;
 	if (c == 'X')
 		c = 55;
 	else

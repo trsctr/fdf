@@ -1,27 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/27 11:07:08 by oandelin          #+#    #+#             */
-/*   Updated: 2022/12/09 17:05:01 by oandelin         ###   ########.fr       */
+/*   Created: 2023/04/04 20:20:26 by oandelin          #+#    #+#             */
+/*   Updated: 2023/04/04 22:52:23 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// ft_isalnum
-// checks if c is alphanumeric character in the ASCII chart
-// yes = 1
-// no = 0
-int	ft_isalnum(int c)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	if (ft_isdigit(c))
-		return (1);
-	if (ft_isalpha(c))
-		return (1);
-	else
-		return (0);
+	t_list	*new;
+	t_list	*temp;
+
+	if (!lst || !f || !del)
+		return (NULL);
+	new = ft_lstnew(f(lst->content));
+	if (!new)
+		return (NULL);
+	while (lst->next)
+	{
+		lst = lst->next;
+		temp = ft_lstnew(f(lst->content));
+		if (!temp)
+		{
+			ft_lstclear(&new, del);
+			return (NULL);
+		}
+		ft_lstadd_back(&new, temp);
+	}
+	return (new);
 }

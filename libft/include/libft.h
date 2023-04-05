@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trsctr <trsctr@student.42.fr>              +#+  +:+       +#+        */
+/*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 18:46:06 by oandelin          #+#    #+#             */
-/*   Updated: 2023/03/24 18:24:00 by trsctr           ###   ########.fr       */
+/*   Updated: 2023/04/04 20:34:45 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@
 # include <unistd.h>
 # include <limits.h>
 # include <stdarg.h>
+
+typedef struct s_list
+{
+	void			*content;
+	struct s_list	*next;
+}					t_list;
 
 // 		CHAR
 
@@ -68,17 +74,29 @@ int		ft_putnbr_fd(int n, int fd);
 int		ft_putuint_fd(unsigned int n, int fd);
 int		ft_putstr_fd(char *s, int fd);
 
+//		LIST
+
+void	ft_lstclear(t_list **lst, void (*del)(void *));
+void	ft_lstdelone(t_list *lst, void (*del)(void *));
+t_list	*ft_lstnew(void	*content);
+void	ft_lstadd_front(t_list **lst, t_list *new);
+void	ft_lstadd_back(t_list **lst, t_list *new);
+void	ft_lstiter(t_list *lst, void (*f)(void *));
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+int		ft_lstsize(t_list *lst);
+t_list	*ft_lstlast(t_list *lst);
+
 //      FT_PRINTF
 
-int     ft_printf(const char *format, ...);
-int     check_specifier(const char *format, va_list args, int i);
-int     parse_format(const char *format, va_list args);
-int     printhex(unsigned long n, char c);
-int     convert_x(unsigned int n, char c);
-int     convert_p(void *p);
-int     convert_id(int n);
-int     convert_u(unsigned int n);
-int     convert_c(int c);
-int     convert_str(char *s);
+int		ft_printf(const char *format, ...);
+int		check_specifier(const char *format, va_list args, int i);
+int		parse_format(const char *format, va_list args);
+int		printhex(unsigned long n, char c);
+int		convert_x(unsigned int n, char c);
+int		convert_p(void *p);
+int		convert_id(int n);
+int		convert_u(unsigned int n);
+int		convert_c(int c);
+int		convert_str(char *s);
 
 #endif

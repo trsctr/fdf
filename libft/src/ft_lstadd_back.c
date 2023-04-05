@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/27 11:07:08 by oandelin          #+#    #+#             */
-/*   Updated: 2022/12/09 17:05:01 by oandelin         ###   ########.fr       */
+/*   Created: 2022/12/13 14:58:20 by oandelin          #+#    #+#             */
+/*   Updated: 2022/12/13 15:43:12 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// ft_isalnum
-// checks if c is alphanumeric character in the ASCII chart
-// yes = 1
-// no = 0
-int	ft_isalnum(int c)
+// ft_lstadd_back
+// adds the new node *new to the end of list *lst
+// returns nothing
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	if (ft_isdigit(c))
-		return (1);
-	if (ft_isalpha(c))
-		return (1);
+	t_list	*curr;
+
+	curr = *lst;
+	if (!*lst)
+		*lst = new;
 	else
-		return (0);
+	{
+		while (curr->next != NULL)
+			curr = curr->next;
+		curr->next = new;
+	}
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: trsctr <trsctr@student.42.fr>              +#+  +:+       +#+         #
+#    By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/01 16:51:49 by oandelin          #+#    #+#              #
-#    Updated: 2023/03/24 16:42:07 by trsctr           ###   ########.fr        #
+#    Updated: 2023/03/30 14:43:37 by oandelin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ fclean: clean
 re: fclean all
 
 test:
-	$(CC) $(SRCS) -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+	$(CC) $(SRCS) -L. libft/libft.a -I libft/include -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
 testlinux:
 	$(CC) $(SRCS) -L. libft/libft.a -I libft/include -Lmlx_Linux -lmlx_Linux -L/usr/lib -Imlx_Linux -lXext -lX11 -lm -lz -o $(NAME)

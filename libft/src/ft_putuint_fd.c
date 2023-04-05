@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putuint_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trsctr <trsctr@student.42.fr>              +#+  +:+       +#+        */
+/*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:31:12 by oandelin          #+#    #+#             */
-/*   Updated: 2023/03/23 12:01:38 by trsctr           ###   ########.fr       */
+/*   Updated: 2023/04/04 21:14:30 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ int	ft_putuint_fd(unsigned int n, int fd)
 	int	i;
 
 	i = 0;
-	//if (n < 0)
-	//	n = UINT_MAX - n + 1;
 	if (n > 9)
 	{
 		i += ft_putuint_fd(n / 10, fd);

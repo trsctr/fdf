@@ -1,35 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcmp.c                                        :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/23 15:53:00 by oandelin          #+#    #+#             */
-/*   Updated: 2022/12/09 17:05:33 by oandelin         ###   ########.fr       */
+/*   Created: 2022/12/13 14:58:20 by oandelin          #+#    #+#             */
+/*   Updated: 2022/12/13 15:47:10 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// ft_memcmp
-// compares two memory blocks for n amout of bytes
-// returns 0 if the blocks are identical
-// or difference if value between the blocks if there is a difference
-int	ft_memcmp(const void *s1, const void *s2, size_t n)
+// ft_lstsize
+// returns the length of the list
+int	ft_lstsize(t_list *lst)
 {
-	unsigned char	*str1;
-	unsigned char	*str2;
-	size_t			i;
+	int		i;
+	t_list	*curr;
 
 	i = 0;
-	str1 = (unsigned char *)s1;
-	str2 = (unsigned char *)s2;
-	while (i < n)
+	curr = lst;
+	while (curr != NULL)
 	{
-		if (str1[i] != str2[i])
-			return (str1[i] - str2[i]);
+		curr = curr->next;
 		i++;
 	}
-	return (0);
+	return (i);
 }
