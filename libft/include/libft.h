@@ -6,14 +6,14 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 18:46:06 by oandelin          #+#    #+#             */
-/*   Updated: 2023/04/04 20:34:45 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/04/08 13:13:00 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
+#  define BUFFER_SIZE 1
 # endif
 # include <stdlib.h>
 # include <unistd.h>

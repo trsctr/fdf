@@ -6,17 +6,33 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 12:16:21 by trsctr            #+#    #+#             */
-/*   Updated: 2023/03/30 15:06:39 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/04/08 13:53:56 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <stdio.h>
 
 int	handle_no_event(void *data)
 {
 	/* This function needs to exist, but it is useless for the moment */
 	return (0);
+}
+void printmatrix(t_map map)
+{
+	int x = 0;
+	int y = 0;
+	
+	while(y < map.rows)
+	{
+		while(x < map.cols)
+	 	{
+	   	ft_printf("x%d,y%d: z%d	", x, y, map.matrix[y][x]);
+		x++;
+		}
+		ft_printf("\n");
+	   	y++;
+	   	x = 0;
+	}
 }
 
 int	handle_keypress(int keysym, t_window *window)
@@ -26,17 +42,21 @@ int	handle_keypress(int keysym, t_window *window)
 	{	
 		mlx_destroy_window(window->mlx_ptr, window->win_ptr);
 		ft_printf("lol imma exit\n");
-		free(window->matrix);
-		exit(0);}
+//		free(window->matrix);
+		exit (0);
+	}
+	if (keysym == 0)
+		printmatrix(*window->map);
 	return (0);
 }
 
 int	handle_keyrelease(int keysym, void *data)
 {
-	printf("Keyrelease: %d\n", keysym);
+	ft_printf("Keyrelease: %d\n", keysym);
 
 	return (0);
 }
+
 
 // int close(int keycode, s_data data)
 // {

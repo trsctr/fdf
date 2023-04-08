@@ -6,41 +6,59 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 10:38:51 by trsctr            #+#    #+#             */
-/*   Updated: 2023/03/30 15:02:34 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/04/08 13:06:26 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 
-int **parse_map(int fd)
+t_map parse_map(int fd, t_map map)
 {
-    char    *mapbuf;
-    char    **lines;
-    char    **split_line;
-    int     **matrix;
+	char	*mapbuf;
+	char	**lines;
+	char	**split_line;
+	int		**matrix;
+	int i;
+	int x = 0;
+	int y = 0;
 
-    int i = 0;
-    matrix = ft_calloc(1,1);
-    mapbuf = ft_calloc(1,1);
-    mapbuf = read_map(mapbuf, fd);
-    lines = ft_split(mapbuf, '\n');
-    free(mapbuf);
-    while(lines[i])
-    {
+	mapbuf = read_map(mapbuf, fd);
+	lines = ft_split(mapbuf, '\n');
+	free(mapbuf);
+	while (lines[i])
+		i++;
+	map.matrix = (int **) malloc(sizeof(int) * i + 1);
+	map.rows = i;
+	i = 0;
+	while(lines[i])
+	{
         split_line = ft_split(lines[i], ' ');
-        matrix[i] = convert_array(split_line);
-        free(split_line);
+        map = convert_array(split_line, map, i);
+		free(split_line);
         i++;
-    }
-	return(matrix);
+	}
+	while(y < map.rows)
+	{
+		while(x < map.cols)
+	 	{
+	   	ft_printf("x%d,y%d: z%d	", x, y, map.matrix[y][x]);
+		x++;
+		}
+		ft_printf("\n");
+	   	y++;
+	   	x = 0;
+	}
+	free(lines);
+	return (map);
 }
 
 char *read_map(char *mapbuf, int fd)
 {
-    char *next_line;
+	char *next_line;
     int i;
 
+	mapbuf = ft_calloc(1,1);
     i = 0;
     next_line = get_next_line(fd);
     while (next_line)
@@ -53,23 +71,23 @@ char *read_map(char *mapbuf, int fd)
     return(mapbuf);
 }
 
-int *convert_array(char **strarray)
+t_map convert_array(char **line, t_map map, int row)
 {
-    int *arr;
-    int arrsize;
+    int cols;
     int i;
 
-    arrsize = 0;
+    cols = 0;
     i = 0;
-    while (strarray[i++])
-        arrsize++;
-    arr = (int *) malloc(sizeof(int) * (arrsize + 1));
+    while (line[i++])
+        cols++;
+	map.matrix[row] = (int *) malloc(sizeof(int) * (cols + 1));
     i = 0;
-    while (i < arrsize)
+	while (i < cols)
     {
-        arr[i] = ft_atoi(strarray[i]);
+        map.matrix[row][i] = ft_atoi(line[i]);
         i++;
     }
-//    ft_printf("arr[i] %d, strarray[i] %s\n", arr[i-1], strarray[i-1]);
-    return(arr);
+	if (map.cols == 0)
+		map.cols = cols;
+	return (map);
 }
