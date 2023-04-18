@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf_draw.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trsctr <trsctr@student.42.fr>              +#+  +:+       +#+        */
+/*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:53:04 by oandelin          #+#    #+#             */
-/*   Updated: 2023/03/24 10:15:12 by trsctr           ###   ########.fr       */
+/*   Updated: 2023/04/18 16:29:16 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,20 @@ void	pixel_to_img(t_img *image, int x, int y, int color)
 	*(unsigned int *)pxl = color;
 }
 
-int draw_line (t_img image, t_line line, int color)
+int draw_line (t_img image, t_point start, t_point end)
 {
-	double x_delta = line.x_end - line.x_start;
-	double y_delta = line.y_end - line.y_start;
+	double x_delta = end.x - start.x;
+	double y_delta = end.y - start.y;
 	int pixels = sqrt((x_delta * x_delta) + (y_delta * y_delta));
-
+	ft_printf("paska");
 	x_delta /= pixels;
 	y_delta /= pixels;
 
-	double x_pixel = line.x_start;
-	double y_pixel = line.y_start;
+	double x_pixel = start.x;
+	double y_pixel = start.y;
 	while (pixels)
 	{
-		pixel_to_img(&image, x_pixel, y_pixel, color);
+		pixel_to_img(&image, x_pixel, y_pixel, start.color);
 		x_pixel += x_delta;
 		y_pixel += y_delta;
 		--pixels;
@@ -61,35 +61,35 @@ void bresenham(t_img image, int x1, int y1, int x2, int y2)
 }
 
 
-void draw_rect (t_img image, int x, int y, int w, int h)
-{
-	t_line hline1;
-	t_line hline2;
-	t_line vline1;
-	t_line vline2;
+// void draw_rect (t_img image, int x, int y, int w, int h)
+// {
+// 	t_line hline1;
+// 	t_line hline2;
+// 	t_line vline1;
+// 	t_line vline2;
 
-	hline1.x_start = x;
-	hline1.y_start = y;
-	hline1.x_end = x + w;
-	hline1.y_end = y;
+// 	hline1.x_start = x;
+// 	hline1.y_start = y;
+// 	hline1.x_end = x + w;
+// 	hline1.y_end = y;
 	
-	vline1.x_start = x;
-	vline1.y_start = y;
-	vline1.x_end = x;
-	vline1.y_end = y + h;
+// 	vline1.x_start = x;
+// 	vline1.y_start = y;
+// 	vline1.x_end = x;
+// 	vline1.y_end = y + h;
 
-	hline2.x_start = x;
-	hline2.y_start = y + h;
-	hline2.x_end = x + w;
-	hline2.y_end = y + h;
+// 	hline2.x_start = x;
+// 	hline2.y_start = y + h;
+// 	hline2.x_end = x + w;
+// 	hline2.y_end = y + h;
 
-	vline2.x_start = x + w;
-	vline2.y_start = y;
-	vline2.x_end = x + w;
-	vline2.y_end = y + h;
+// 	vline2.x_start = x + w;
+// 	vline2.y_start = y;
+// 	vline2.x_end = x + w;
+// 	vline2.y_end = y + h;
 
-	draw_line(image, hline1, 0x00FF0000);
-	draw_line(image, vline1, 0x0000FF00);
-	draw_line(image, hline2, 0x000000FF);
-	draw_line(image, vline2, 0x00FFFF00);
-}
+// 	draw_line(image, hline1, 0x00FF0000);
+// 	draw_line(image, vline1, 0x0000FF00);
+// 	draw_line(image, hline2, 0x000000FF);
+// 	draw_line(image, vline2, 0x00FFFF00);
+// }
