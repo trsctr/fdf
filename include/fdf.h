@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:49:04 by oandelin          #+#    #+#             */
-/*   Updated: 2023/04/18 16:31:07 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/04/27 16:54:21 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 // # include <X11/keysym.h>
 // # include <X11/X.h>
 # define MLX_ERROR 1
+# define WIN_W 800
+# define WIN_H 600
 
 typedef struct s_point {
 	int		x;
@@ -31,28 +33,26 @@ typedef struct s_point {
 }	t_point;
 
 typedef struct s_map {
-	int			rows;
-	int			cols;
+	int			w;
+	int			h;
 	t_point		**points;
 }	t_map;
 
-typedef struct s_window {
-	int			width;
-	int			height;
-	void		*mlx_ptr;
-	void		*win_ptr;
-//	t_map		*map;
-}	t_window;
+// typedef struct s_window {
+
+// 	int			w;
+// 	int			h;
+// 	char		*title;
+// }	t_window;
 
 typedef struct s_img {
-	char		*addr;
+	void		*img_ptr;
+	int			*imgdata;
 	int			w;
 	int			h;
 	int			bpp;
 	int			endian;
 	int			line_len;
-	void		*img_ptr;
-	t_window	win;
 }	t_img;
 
 typedef struct s_line {
@@ -62,10 +62,19 @@ typedef struct s_line {
 	int			y_end;
 }	t_line;
 
+typedef struct s_fdf {
+	void		*mlx_ptr;
+	void		*win_ptr;
+	t_img		image;
+	int			win_w;
+	int			win_h;
+	t_map		map;
+}	t_fdf;
 // #### INITIALIZE
 
-t_window	new_window(int w, int h, char *title);
-t_img		new_image(int w, int h, t_window window);
+t_fdf new_window (t_fdf data);
+
+t_img new_image(int w, int h, t_fdf data);
 
 // #### READING THE MAP
 
@@ -76,15 +85,20 @@ t_map		convert_array(char **line, t_map map, int row);
 
 // #### DRAW
 
-void		pixel_to_img(t_img *image, int x, int y, int color);
+void		pixel_to_img(t_fdf *data, int x, int y, int color);
 void		bresenham(t_img image, int x1, int y1, int x2, int y2);
 void		draw_rect(t_img image, int x, int y, int w, int h);
-int			draw_line (t_img image, t_point start, t_point end);
+int			draw_line (t_fdf fdf, int x, int y, int x2, int y2);
+void		draw(t_fdf data);
+void		menu(t_fdf data);
+void draw_moire(t_fdf fdf, int left, int top, int right, int bottom);
+
+
 
 // #### HOOKS
 
 int			handle_no_event(void *data);
-int			handle_keypress(int keysym, t_window *window);
+int	handle_keypress(int keysym, t_fdf *data);
 int			handle_keyrelease(int keysym, void *data);
 
 #endif

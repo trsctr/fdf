@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_hooks.c                                        :+:      :+:    :+:   */
+/*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 12:16:21 by trsctr            #+#    #+#             */
-/*   Updated: 2023/04/15 19:56:24 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/04/25 22:15:52 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ int	handle_no_event(void *data)
 // 	}
 // }
 
-int	handle_keypress(int keysym, t_window *window)
+int	handle_keypress(int keysym, t_fdf *data)
 {
 	ft_printf("Keypress: %d\n", keysym);
 	if (keysym == 53)
 	{	
-		mlx_destroy_window(window->mlx_ptr, window->win_ptr);
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		ft_printf("lol imma exit\n");
 //		free(window->matrix);
 		exit (0);
