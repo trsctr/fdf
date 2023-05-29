@@ -6,11 +6,11 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:47:46 by oandelin          #+#    #+#             */
-/*   Updated: 2023/04/25 22:15:30 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/05/29 16:02:05 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../include/fdf.h"
 
 t_fdf new_window (t_fdf data)
 {
@@ -31,6 +31,14 @@ t_img new_image(int w, int h, t_fdf data)
 	image.w = w;
 	image.h = h;
 	return (image);
+}
+
+void	set_defaults(t_fdf *fdf)
+{
+	fdf->zoom = 30;
+	fdf->angle = M_PI_4;
+	fdf->shift_x = 150;
+	fdf->shift_y = 150;
 }
 
 void menu(t_fdf data)

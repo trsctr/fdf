@@ -6,11 +6,11 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 12:16:21 by trsctr            #+#    #+#             */
-/*   Updated: 2023/04/25 22:15:52 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/04/29 18:18:55 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../include/fdf.h"
 
 int	handle_no_event(void *data)
 {
