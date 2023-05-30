@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 17:10:59 by oandelin          #+#    #+#             */
-/*   Updated: 2023/05/29 16:53:32 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/05/30 19:34:01 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	ft_printf("Loading map..\n");
-	fdf = parse_map(&fdf, fd);
+	fdf = parse_map(fdf, fd);
 // 	error handling?
 	close(fd);
 	fdf = new_window(fdf);

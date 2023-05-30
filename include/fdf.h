@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:49:04 by oandelin          #+#    #+#             */
-/*   Updated: 2023/05/29 16:15:11 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/05/30 19:53:45 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,6 @@ typedef struct s_map {
 	int			h;
 	t_point		**points;
 }	t_map;
-
-// typedef struct s_window {
-
-// 	int			w;
-// 	int			h;
-// 	char		*title;
-// }	t_window;
 
 typedef struct s_img {
 	void		*img_ptr;
@@ -80,7 +73,7 @@ void		set_defaults(t_fdf *fdf);
 
 // #### READING THE MAP
 
-t_fdf		parse_map(t_fdf *fdf, int fd);
+t_fdf		parse_map(t_fdf fdf, int fd);
 t_map		get_map_size(t_map map, char **lines);
 char		*read_map(char *mapbuf, int fd);
 t_map		convert_array(char **line, t_map map, int row);
@@ -88,13 +81,9 @@ t_map		convert_array(char **line, t_map map, int row);
 // #### DRAW
 
 void		pixel_to_img(t_fdf *data, int x, int y, int color);
-void		bresenham(t_img image, int x1, int y1, int x2, int y2);
-void		draw_rect(t_img image, int x, int y, int w, int h);
 void		draw_line(t_fdf *fdf, float x, float y, float x1, float y1);
 void		draw(t_fdf *data);
 void		menu(t_fdf data);
-void		draw_moire(t_fdf fdf, int left, int top, int right, int bottom);
-void		draw_tile(t_fdf data, int x, int y, int color);
 
 // #### COLOR
 

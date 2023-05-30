@@ -6,7 +6,7 @@
 #    By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/01 16:51:49 by oandelin          #+#    #+#              #
-#    Updated: 2023/04/29 18:18:24 by oandelin         ###   ########.fr        #
+#    Updated: 2023/05/30 18:29:06 by oandelin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ SRCS	= src/fdf.c src/init.c src/draw.c src/events.c src/parse_map.c
 HFILES = fdf.h
 HEADERS = $(addprefix $(INCDIR),$(HFILES))
 CC	= cc
-CFLAGS	= -Wall -Werror -Wextra
+CFLAGS	= -Wall -Werror -Wextra -fsanitize=address
 INCFLAG	= $(addprefix -I,$(INCDIR))
 
 all: $(NAME)
@@ -32,7 +32,7 @@ fclean: clean
 re: fclean all
 
 test:
-	$(CC) $(SRCS) -L. libft/libft.a -I libft/include -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+	$(CC) $(SRCS) -fsanitize=address -L. libft/libft.a -I libft/include -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
 testlinux:
 	$(CC) $(SRCS) -L. libft/libft.a -I libft/include -Lmlx_Linux -lmlx_Linux -L/usr/lib -Imlx_Linux -lXext -lX11 -lm -lz -o $(NAME)
