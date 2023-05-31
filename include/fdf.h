@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:49:04 by oandelin          #+#    #+#             */
-/*   Updated: 2023/05/30 19:57:55 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:25:19 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,25 @@
 # define MLX_ERROR 1
 # define WIN_W 1024
 # define WIN_H 768
+
+enum e_events{
+	ON_CLOSE = 17,
+	ON_KEYPRESS = 02,
+	ON_KEYRELEASE = 03
+};
+
+enum e_keys {
+	KEY_ESC = 53,
+	KEY_LEFT = 123,
+	KEY_RIGHT = 124,
+	KEY_DOWN = 125,
+	KEY_UP = 126,
+	KEY_W = 13,
+	KEY_S = 1,
+	KEY_A = 0,
+	KEY_Q = 12,
+	KEY_SPACE = 49
+};
 
 typedef struct s_point {
 	int		z;
@@ -59,12 +78,14 @@ typedef struct s_fdf {
 	t_img		image;
 	int			win_w;
 	int			win_h;
-	int			zoom;
+	float		zoom;
 	float		angle;
 	int			shift_x;
 	int			shift_y;
+	float		z_factor;
 	t_map		map;
 }	t_fdf;
+
 // #### INITIALIZE
 
 t_fdf		new_window(t_fdf data);
@@ -74,9 +95,9 @@ void		set_defaults(t_fdf *fdf);
 // #### READING THE MAP
 
 t_fdf		parse_map(t_fdf fdf, int fd);
-t_map		get_map_size(t_map map, char **lines);
 char		*read_map(char *mapbuf, int fd);
-t_map		convert_array(char **line, t_map map, int row);
+t_map		convert_map(t_map map, char **lines);
+t_map		fill_array(char **line, t_map map, int row);
 
 // #### DRAW
 
@@ -96,7 +117,8 @@ int			set_color(int transparency, int red, int green, int blue);
 // #### HOOKS
 
 int			handle_no_event(void *data);
-int			handle_keypress(int keysym, t_fdf *data);
+int			handle_keypress(int key, t_fdf *data);
 int			handle_keyrelease(int keysym, void *data);
+int			handle_close(t_fdf *data);
 
 #endif

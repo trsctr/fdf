@@ -6,50 +6,63 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 12:16:21 by trsctr            #+#    #+#             */
-/*   Updated: 2023/04/29 18:18:55 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:32:30 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
+#include <stdio.h>
 
 int	handle_no_event(void *data)
 {
 	/* This function needs to exist, but it is useless for the moment */
 	return (0);
 }
-// void printmatrix(t_map map)
-// {
-// 	int x = 0;
-// 	int y = 0;
-	
-// 	while(y < map.rows)
-// 	{
-// 		while(x < map.cols)
-// 	 	{
-// 	   	ft_printf("x%d,y%d: z%d	", x, y, map.matrix[y][x]);
-// 		x++;
-// 		}
-// 		ft_printf("\n");
-// 	   	y++;
-// 	   	x = 0;
-// 	}
-// }
 
-int	handle_keypress(int keysym, t_fdf *data)
+int	handle_close(t_fdf *data)
 {
-	ft_printf("Keypress: %d\n", keysym);
-	if (keysym == 53)
+	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	exit (0);
+}
+
+void	handle_transform(int key, t_fdf *data)
+{
+	if (key == KEY_RIGHT)
+		data->shift_x += 10;
+	if (key == KEY_LEFT)
+		data->shift_x -= 10;
+	if (key == KEY_UP)
+		data->shift_y -= 10;
+	if (key == KEY_DOWN)
+		data->shift_y += 10;
+	if (key == KEY_W)
+		data->zoom += 0.5;
+	if (key == KEY_S && data->zoom > 1)
+		data->zoom -= 0.5;
+	if (key == KEY_Q)
+		data->z_factor += 0.05;
+	if (key == KEY_A)
+		data->z_factor -= 0.05;
+	if (key == KEY_SPACE)
+		set_defaults(data);
+	draw(data);
+}
+
+int	handle_keypress(int key, t_fdf *data)
+{
+	ft_printf("Keypress: %d\n", key);
+	if (key == KEY_ESC)
 	{	
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		ft_printf("lol imma exit\n");
-//		free(window->matrix);
 		exit (0);
 	}
-	// if (keysym == 0)
-	// 	printmatrix(*window->map);
-//	if (keysym == 49)
-//		draw_rect(window.)
-
+	if (key == KEY_RIGHT || key == KEY_LEFT || key == KEY_UP || key == KEY_DOWN
+		|| key == KEY_W || key == KEY_S || key == KEY_SPACE || key == KEY_A
+		|| key == KEY_Q )
+	{
+		handle_transform(key, data);
+	}
 	return (0);
 }
 
@@ -59,19 +72,3 @@ int	handle_keyrelease(int keysym, void *data)
 
 	return (0);
 }
-
-
-// int close(int keycode, s_data data)
-// {
-// 	mlx_destroy_window(data.mlx_ptr, data.win_ptr);
-// 	return(0);
-// }
-
-
-
-// int	key_hook(int keycode, t_window *window)
-// {
-// 	mlx_destroy_window(window->mlx_ptr, window->win_ptr);
-// 	printf("hihi\n");
-// 	exit(0);
-// }

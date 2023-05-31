@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:53:04 by oandelin          #+#    #+#             */
-/*   Updated: 2023/05/30 19:56:09 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:31:51 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	pixel_to_img(t_fdf *data, int x, int y, int color)
 	// pxl = image->imgdata + (y * image->line_len + x * (image->bpp / 8 ));
 	// *pxl = color;
 }
-void	get_zoom(float *x, float *y, float *x1, float *y1, int zoom)
+
+void	get_zoom(float *x, float *y, float *x1, float *y1, float zoom)
 {
 	*x *= zoom;
 	*y *= zoom;
@@ -32,11 +33,11 @@ void	get_zoom(float *x, float *y, float *x1, float *y1, int zoom)
 
 void	isometric(float *x, float *y, int z, float angle)
 {
-	float temp_x;
-
+	float	temp_x;
+	
 	temp_x = *x;
-	*x = (temp_x - *y) * cos(0.53);
-	*y = (temp_x + *y) * sin(0.53);// - z;
+	*x = (temp_x - *y) * cos(angle);
+	*y = (temp_x + *y) * sin(angle);// - z;
 }
 
 
@@ -48,34 +49,32 @@ void	draw_line(t_fdf *fdf, float x, float y, float x1, float y1)
 	double y_delta;
 	int pixels;
 	int color;
-	int z;
-	int	z1;
+	float z;
+	float z1;
 
 	if ((int)y < fdf->map.h && (int)x < fdf->map.w) 
-		z = fdf->map.points[(int)y][(int)x].z;
+		z = (float)fdf->map.points[(int)y][(int)x].z * fdf->z_factor;
 	else 
 		z = 0;
 	if ((int)y1 < fdf->map.h && (int)x1 < fdf->map.w)
-		z1 = fdf->map.points[(int)y1][(int)x1].z;
+		z1 = (float)fdf->map.points[(int)y1][(int)x1].z * fdf->z_factor;
 	else
 		z1 = z;	
-	if (z > 0 || z1 > 0)
-		color = 0xFF00000;
-	else
-		color = 0xFFFFFF;
+	color = fdf->map.points[(int)y][(int)x].color;
 	isometric(&x, &y, z, fdf->angle);
 	isometric(&x1, &y1, z1, fdf->angle);
-	get_zoom(&x, &y, &x1, &y1, fdf->zoom);
 	y -= +z;
 	y1 -= +z1;
+	get_zoom(&x, &y, &x1, &y1, fdf->zoom);
+
 	x += fdf->shift_x;
 	y += fdf->shift_y;
 	x1 += fdf->shift_x;
 	y1 += fdf->shift_y;
-	if (x > fdf->win_w || x1 > fdf->win_w || x < 0 || x1 < 0)
-		return ;
-	if (y > fdf->win_h || y1 > fdf->win_h || y < 0 || y1 < 0)
-		return ;
+//	if (x > fdf->win_w || x1 > fdf->win_w || x < 0 || x1 < 0)
+//		return ;
+//	if (y > fdf->win_h || y1 > fdf->win_h || y < 0 || y1 < 0)
+//		return ;
 	x_delta = x1 - x;
 	y_delta = y1 - y;
 
@@ -92,17 +91,42 @@ void	draw_line(t_fdf *fdf, float x, float y, float x1, float y1)
 		pixels--;
 	}
 }
+
+void	draw_borders(t_fdf *data)
+{
+	int	y;
+	int	x;
+
+	y = data->map.h;
+	x = data->map.w;
+	while (y > 0)
+	{
+		draw_line(data, x, y, x, y - 1);
+		y--;
+	}
+	y = data->map.h;
+	while (x > 0)
+	{	
+		draw_line(data, x, y, x - 1, y);
+		x--;
+	}
+}	
+
+
 void	draw(t_fdf *data)
 {
 	int	x;
 	int	y;
 	int	color;
 
+	//if (data->image != NULL)
+	//mlx_destroy_image(data->mlx_ptr, data->image.img_ptr);
+	data->image = new_image(WIN_W, WIN_H, *data);
 	y = 0;
-	while (y <= data->map.h)
+	while (y < data->map.h)
 	{
 		x = 0;
-		while (x <= data->map.w)
+		while (x < data->map.w)
 		{
 			draw_line(data, x, y, x + 1, y);
 			draw_line(data, x, y, x, y + 1);
@@ -110,5 +134,8 @@ void	draw(t_fdf *data)
 		}
 		y++;
 	}
+//	draw_borders(data);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->image.img_ptr, 0, 0);
+	menu(*data);
 }
 

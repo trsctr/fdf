@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 17:10:59 by oandelin          #+#    #+#             */
-/*   Updated: 2023/05/30 19:34:01 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/05/31 18:05:48 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,16 @@ int	main(int argc, char **argv)
 	set_defaults(&fdf);
 	if (!fdf.mlx_ptr || !fdf.win_ptr)
 		return (MLX_ERROR);
-	fdf.image = new_image(WIN_W, WIN_H, fdf);
-	mlx_loop_hook(fdf.mlx_ptr, &handle_no_event, &fdf);
+//	fdf.image = new_image(WIN_W, WIN_H, fdf);
+	//mlx_loop_hook(fdf.mlx_ptr, &handle_no_event, &fdf);
 	draw(&fdf);
-	mlx_hook(fdf.win_ptr, 02, 0, &handle_keypress, &fdf); /* ADDED */
-	mlx_hook(fdf.win_ptr, 03, 0, &handle_keyrelease, &fdf); /* CHANGED */
-	mlx_put_image_to_window(fdf.mlx_ptr, fdf.win_ptr, fdf.image.img_ptr, 0, 0);
+	mlx_hook(fdf.win_ptr, ON_CLOSE, 0, &handle_close, &fdf); /* ADDED */
+	mlx_hook(fdf.win_ptr, ON_KEYPRESS, 0, &handle_keypress, &fdf); /* ADDED */
+	mlx_hook(fdf.win_ptr, ON_KEYRELEASE, 0, &handle_keyrelease, &fdf); /* CHANGED */
 	menu(fdf);
+
+//	mlx_destroy_image(fdf.mlx_ptr, fdf.image.img_ptr);
+	//menu(fdf);
 
 	mlx_loop(fdf.mlx_ptr);
 }
