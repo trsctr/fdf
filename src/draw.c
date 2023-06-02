@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:53:04 by oandelin          #+#    #+#             */
-/*   Updated: 2023/06/02 14:29:45 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/06/02 16:57:09 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ void	pixel_to_img(t_fdf *data, int x, int y, int color)
 
 
 
-void bresenham(t_fdf *fdf, double x, double y, double x1, double y1)
+void bresenham(t_fdf *fdf, t_line *line)
 {
-	double x_delta;
-	double y_delta;
-	int pixels;
-	int color;
-		
+	double	x_delta;
+	double	y_delta;
+	int		pixels;
+	int		color;
+
 	color = 0xFFFFFF;
-	x_delta = x1 - x;
-	y_delta = y1 - y;
+	x_delta = line->x1 - line->x;
+	y_delta = line->y1 - line->y;
 	pixels = sqrt((x_delta * x_delta) + (y_delta * y_delta));
 	x_delta /= pixels;
 	y_delta /= pixels;
@@ -42,54 +42,51 @@ void bresenham(t_fdf *fdf, double x, double y, double x1, double y1)
 	{
 		// jos haluaa gradientin, sille pitaa olla funktio tassa
 		// pitaa olla position counterina jotenkin tolle gradientille
-		pixel_to_img(fdf, x, y, color);
-		x += x_delta;
-		y += y_delta;
+		pixel_to_img(fdf, line->x, line->y, color);
+		line->x += x_delta;
+		line->y += y_delta;
 		pixels--;
 	}
 }
 
 void	draw_borders(t_fdf *data)
 {
-	int	y;
-	int	x;
+	t_coords	coordinates;
 
-	y = data->map.h;
-	x = data->map.w;
-	while (y > 0)
+	coordinates.y = data->map.h - 1;
+	coordinates.x = data->map.w;
+	while (coordinates.y >= 0)
 	{
-		project_line(data, x, y, x, y - 1);
-		y--;
+		project_line(data, coordinates, HORIZONTAL);
+		coordinates.y--;
 	}
-	y = data->map.h;
-	while (x > 0)
+	coordinates.x--;
+	coordinates.y = data->map.h;
+	while (coordinates.x >= 0)
 	{	
-		project_line(data, x, y, x - 1, y);
-		x--;
+		project_line(data, coordinates, VERTICAL);
+		coordinates.x--;
 	}
 }	
 
 
 void	draw(t_fdf *data)
 {
-	int	x;
-	int	y;
+	t_coords coordinates;
 	int	color;
 
-	//if (data->image != NULL)
-	//mlx_destroy_image(data->mlx_ptr, data->image.img_ptr);
 	data->image = new_image(WIN_W, WIN_H, *data);
-	y = 0;
-	while (y < data->map.h)
+	coordinates.y = 0;
+	while (coordinates.y < data->map.h)
 	{
-		x = 0;
-		while (x < data->map.w)
+		coordinates.x = 0;
+		while (coordinates.x < data->map.w)
 		{
-			project_line(data, x, y, x + 1, y);
-			project_line(data, x, y, x, y + 1);
-			x++;
+			project_line(data, coordinates, HORIZONTAL);
+			project_line(data, coordinates, VERTICAL);
+			coordinates.x++;
 		}
-		y++;
+		coordinates.y++;
 	}
 	draw_borders(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->image.img_ptr, 0, 0);

@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:49:04 by oandelin          #+#    #+#             */
-/*   Updated: 2023/06/02 14:30:53 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/06/02 17:02:28 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,20 @@ enum e_keys {
 	KEY_SPACE = 49
 };
 
+enum e_direction {
+	HORIZONTAL = 0,
+	VERTICAL = 1
+};
+
 typedef struct s_point {
 	int		z;
 	int		color;
 }	t_point;
+
+typedef	struct s_coords {
+	int		x;
+	int		y;
+}	t_coords;
 
 typedef struct s_map {
 	int			w;
@@ -66,10 +76,10 @@ typedef struct s_img {
 }	t_img;
 
 typedef struct s_line {
-	int			x_start;
-	int			y_start;
-	int			x_end;
-	int			y_end;
+	double		x;
+	double		y;
+	double		x1;
+	double		y1;
 }	t_line;
 
 typedef struct s_fdf {
@@ -100,19 +110,18 @@ t_map		convert_map(t_map map, char **lines);
 t_map		fill_array(char **line, t_map map, int row);
 
 // #### PROJECTION
-void	project_line(t_fdf *fdf, double x, double y, double x1, double y1);
-void	shift_line(t_fdf *fdf, double *x, double *y, double *x1, double *y1);
-void	isometric(double *x, double *y, double z, double angle);
-void	get_zoom(double *x, double *y, double *x1, double *y1, double zoom);
+void		project_line(t_fdf *fdf, t_coords coordinates, int direction);
+void		shift_line(t_fdf *fdf, t_line *line);
+void		isometric(t_line *line, t_fdf *data);
+void		get_zoom(t_fdf *data, t_line *line);
 
 
 // #### DRAW
 
 void		pixel_to_img(t_fdf *data, int x, int y, int color);
-void		draw_line(t_fdf *fdf, float x, float y, float x1, float y1);
 void		draw(t_fdf *data);
 void		menu(t_fdf data);
-void		bresenham(t_fdf *fdf, double x, double y, double x1, double y1);
+void		bresenham(t_fdf *fdf, t_line *line);
 
 // #### COLOR
 
