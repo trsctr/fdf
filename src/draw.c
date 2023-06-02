@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:53:04 by oandelin          #+#    #+#             */
-/*   Updated: 2023/06/02 14:13:22 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/06/02 14:29:45 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,58 +23,9 @@ void	pixel_to_img(t_fdf *data, int x, int y, int color)
 	// *pxl = color;
 }
 
-void	get_zoom(float *x, float *y, float *x1, float *y1, float zoom)
-{
-	*x *= zoom;
-	*y *= zoom;
-	*x1 *= zoom;
-	*y1 *= zoom;
-}
-
-void	isometric(float *x, float *y, int z, float angle)
-{
-	float	temp_x;
-	
-	temp_x = *x;
-	*x = (temp_x - *y) * cos(angle);
-	*y = (temp_x + *y) * sin(angle);// - z;
-}
 
 
-void	draw_line(t_fdf *fdf, float x, float y, float x1, float y1)
-{
-	// muuta semmoseks etta hakee kaikki tiedot structista
-	// alkupiste, loppupiste, varit.
-	float z;
-	float z1;
-
-	if ((int)y < fdf->map.h && (int)x < fdf->map.w) 
-		z = (float)fdf->map.points[(int)y][(int)x].z * fdf->z_factor;
-	else 
-		z = 0;
-	if ((int)y1 < fdf->map.h && (int)x1 < fdf->map.w)
-		z1 = (float)fdf->map.points[(int)y1][(int)x1].z * fdf->z_factor;
-	else
-		z1 = z;	
-//	color = fdf->map.points[(int)y][(int)x].color;
-	isometric(&x, &y, z, fdf->angle);
-	isometric(&x1, &y1, z1, fdf->angle);
-	y -= +z;
-	y1 -= +z1;
-	get_zoom(&x, &y, &x1, &y1, fdf->zoom);
-
-	x += fdf->shift_x;
-	y += fdf->shift_y;
-	x1 += fdf->shift_x;
-	y1 += fdf->shift_y;
-	bresenham(fdf, x, y, x1, y1);
-//	if (x > fdf->win_w || x1 > fdf->win_w || x < 0 || x1 < 0)
-//		return ;
-//	if (y > fdf->win_h || y1 > fdf->win_h || y < 0 || y1 < 0)
-//		return ;
-}
-
-void bresenham(t_fdf *fdf, float x, float y, float x1, float y1)
+void bresenham(t_fdf *fdf, double x, double y, double x1, double y1)
 {
 	double x_delta;
 	double y_delta;
@@ -107,13 +58,13 @@ void	draw_borders(t_fdf *data)
 	x = data->map.w;
 	while (y > 0)
 	{
-		draw_line(data, x, y, x, y - 1);
+		project_line(data, x, y, x, y - 1);
 		y--;
 	}
 	y = data->map.h;
 	while (x > 0)
 	{	
-		draw_line(data, x, y, x - 1, y);
+		project_line(data, x, y, x - 1, y);
 		x--;
 	}
 }	
@@ -134,13 +85,13 @@ void	draw(t_fdf *data)
 		x = 0;
 		while (x < data->map.w)
 		{
-			draw_line(data, x, y, x + 1, y);
-			draw_line(data, x, y, x, y + 1);
+			project_line(data, x, y, x + 1, y);
+			project_line(data, x, y, x, y + 1);
 			x++;
 		}
 		y++;
 	}
-//	draw_borders(data);
+	draw_borders(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->image.img_ptr, 0, 0);
 	menu(*data);
 }

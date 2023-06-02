@@ -6,12 +6,12 @@
 #    By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/01 16:51:49 by oandelin          #+#    #+#              #
-#    Updated: 2023/05/31 17:32:56 by oandelin         ###   ########.fr        #
+#    Updated: 2023/06/02 14:26:12 by oandelin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 	= fdf
-SRCS	= src/fdf.c src/init.c src/draw.c src/events.c src/parse_map.c
+SRCS	= src/fdf.c src/init.c src/draw.c src/events.c src/parse_map.c src/projection.c
 HFILES = fdf.h
 HEADERS = $(addprefix $(INCDIR),$(HFILES))
 CC	= cc

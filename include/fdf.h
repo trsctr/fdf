@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:49:04 by oandelin          #+#    #+#             */
-/*   Updated: 2023/06/02 14:14:19 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/06/02 14:30:53 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,11 @@ typedef struct s_fdf {
 	t_img		image;
 	int			win_w;
 	int			win_h;
-	float		zoom;
-	float		angle;
+	double		zoom;
+	double		angle;
 	int			shift_x;
 	int			shift_y;
-	float		z_factor;
+	double		z_factor;
 	t_map		map;
 }	t_fdf;
 
@@ -99,13 +99,20 @@ char		*read_map(char *mapbuf, int fd);
 t_map		convert_map(t_map map, char **lines);
 t_map		fill_array(char **line, t_map map, int row);
 
+// #### PROJECTION
+void	project_line(t_fdf *fdf, double x, double y, double x1, double y1);
+void	shift_line(t_fdf *fdf, double *x, double *y, double *x1, double *y1);
+void	isometric(double *x, double *y, double z, double angle);
+void	get_zoom(double *x, double *y, double *x1, double *y1, double zoom);
+
+
 // #### DRAW
 
 void		pixel_to_img(t_fdf *data, int x, int y, int color);
 void		draw_line(t_fdf *fdf, float x, float y, float x1, float y1);
 void		draw(t_fdf *data);
 void		menu(t_fdf data);
-void		bresenham(t_fdf *fdf, float x, float y, float x1, float y1);
+void		bresenham(t_fdf *fdf, double x, double y, double x1, double y1);
 
 // #### COLOR
 
