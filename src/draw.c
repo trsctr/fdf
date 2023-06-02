@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:53:04 by oandelin          #+#    #+#             */
-/*   Updated: 2023/05/31 19:31:51 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/06/02 14:13:22 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,6 @@ void	draw_line(t_fdf *fdf, float x, float y, float x1, float y1)
 {
 	// muuta semmoseks etta hakee kaikki tiedot structista
 	// alkupiste, loppupiste, varit.
-	double x_delta;
-	double y_delta;
-	int pixels;
-	int color;
 	float z;
 	float z1;
 
@@ -60,7 +56,7 @@ void	draw_line(t_fdf *fdf, float x, float y, float x1, float y1)
 		z1 = (float)fdf->map.points[(int)y1][(int)x1].z * fdf->z_factor;
 	else
 		z1 = z;	
-	color = fdf->map.points[(int)y][(int)x].color;
+//	color = fdf->map.points[(int)y][(int)x].color;
 	isometric(&x, &y, z, fdf->angle);
 	isometric(&x1, &y1, z1, fdf->angle);
 	y -= +z;
@@ -71,13 +67,23 @@ void	draw_line(t_fdf *fdf, float x, float y, float x1, float y1)
 	y += fdf->shift_y;
 	x1 += fdf->shift_x;
 	y1 += fdf->shift_y;
+	bresenham(fdf, x, y, x1, y1);
 //	if (x > fdf->win_w || x1 > fdf->win_w || x < 0 || x1 < 0)
 //		return ;
 //	if (y > fdf->win_h || y1 > fdf->win_h || y < 0 || y1 < 0)
 //		return ;
+}
+
+void bresenham(t_fdf *fdf, float x, float y, float x1, float y1)
+{
+	double x_delta;
+	double y_delta;
+	int pixels;
+	int color;
+		
+	color = 0xFFFFFF;
 	x_delta = x1 - x;
 	y_delta = y1 - y;
-
 	pixels = sqrt((x_delta * x_delta) + (y_delta * y_delta));
 	x_delta /= pixels;
 	y_delta /= pixels;

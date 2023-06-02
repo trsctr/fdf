@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:49:04 by oandelin          #+#    #+#             */
-/*   Updated: 2023/05/31 19:25:19 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/06/02 14:14:19 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ void		pixel_to_img(t_fdf *data, int x, int y, int color);
 void		draw_line(t_fdf *fdf, float x, float y, float x1, float y1);
 void		draw(t_fdf *data);
 void		menu(t_fdf data);
+void		bresenham(t_fdf *fdf, float x, float y, float x1, float y1);
 
 // #### COLOR
 
