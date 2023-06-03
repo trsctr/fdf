@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 10:38:51 by trsctr            #+#    #+#             */
-/*   Updated: 2023/05/31 18:48:58 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/06/03 14:19:22 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ t_fdf parse_map(t_fdf fdf, int fd)
 	char	**lines;
 	int		i;
 
+	i = 0;
 	map_buffer = read_map(map_buffer, fd);
 	lines = ft_split(map_buffer, '\n');
 	free(map_buffer);
@@ -58,25 +59,6 @@ t_map	convert_map(t_map map, char **lines)
 		free(split_line);
 		i++;
 	}
-	return (map);
-}
-
-t_map	get_map_size(t_map map, char **lines)
-{
-	int	i;
-
-	i = 0;
-	while (lines[0][i])
-	{
-		if ((lines[0][i + 1] == ' ' || !lines[0][i + 1])
-							&& ft_isalnum(lines[0][i]))
-		{	
-			map.w++;
-		}
-		i++;
-	}
-	while (lines[map.h])
-		map.h++;
 	return (map);
 }
 

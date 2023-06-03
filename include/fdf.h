@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:49:04 by oandelin          #+#    #+#             */
-/*   Updated: 2023/06/02 17:02:28 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/06/03 14:19:50 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct s_point {
 	int		color;
 }	t_point;
 
-typedef	struct s_coords {
+typedef struct s_coords {
 	int		x;
 	int		y;
 }	t_coords;

@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 14:22:03 by oandelin          #+#    #+#             */
-/*   Updated: 2023/06/02 17:03:06 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/06/03 14:18:19 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,16 @@ void	isometric(t_line *line, t_fdf *data)
 	double	z1;
 
 	if ((int)line->y < data->map.h && (int)line->x < data->map.w) 
-		z = (double)data->map.points[(int)line->y][(int)line->x].z * data->z_factor;
-	else 
+		z = (double)data->map.points[(int)line->y][(int)line->x].z
+			* data->z_factor;
+	else
 		z = 0;
 	if ((int)line->y1 < data->map.h && (int)line->x1 < data->map.w)
-		z1 = (double)data->map.points[(int)line->y1][(int)line->x1].z * data->z_factor;
+		z1 = (double)data->map.points[(int)line->y1][(int)line->x1].z
+			* data->z_factor;
 	else
 		z1 = z;	
-	
+
 	temp_x = line->x;
 	temp_x1 = line->x1;
 	line->x = (temp_x - line->y) * cos(data->angle);
