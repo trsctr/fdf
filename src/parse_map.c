@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 10:38:51 by trsctr            #+#    #+#             */
-/*   Updated: 2023/06/03 14:19:22 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/06/03 16:29:02 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,25 @@ t_fdf parse_map(t_fdf fdf, int fd)
 		fdf.map.h++;
 	fdf.map = convert_map(fdf.map, lines);
 	free(lines);
+	close(fd);
 	return (fdf);
+}
+
+char	*read_map(char *map_buffer, int fd)
+{
+	char	*next_line;
+	int		i;
+
+	map_buffer = ft_calloc(1,1);
+	next_line = get_next_line(fd);
+	while (next_line)
+	{
+		map_buffer = ft_strjoin(map_buffer, next_line);
+		free(next_line);
+		next_line = get_next_line(fd);
+		i++;
+	}
+	return (map_buffer);
 }
 
 t_map	convert_map(t_map map, char **lines)
@@ -57,27 +75,12 @@ t_map	convert_map(t_map map, char **lines)
 		split_line = ft_split(lines[i], ' ');
 		map = fill_array(split_line, map, i);
 		free(split_line);
+		free(lines[i]);
 		i++;
 	}
 	return (map);
 }
 
-char	*read_map(char *map_buffer, int fd)
-{
-	char	*next_line;
-	int		i;
-
-	map_buffer = ft_calloc(1,1);
-	next_line = get_next_line(fd);
-	while (next_line)
-	{
-		map_buffer = ft_strjoin(map_buffer, next_line);
-		free(next_line);
-		next_line = get_next_line(fd);
-		i++;
-	}
-	return (map_buffer);
-}
 // int parse_color(char *str)
 // {
 // 	int i;
@@ -117,6 +120,7 @@ t_map	fill_array(char **line, t_map map, int row)
 		// }
 		// else 
 		//
+		free(line[col]);
 		col++;
 	}
 	if (col != map.w)

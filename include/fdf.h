@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:49:04 by oandelin          #+#    #+#             */
-/*   Updated: 2023/06/03 14:19:50 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/06/03 15:10:46 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ void		shift_line(t_fdf *fdf, t_line *line);
 void		isometric(t_line *line, t_fdf *data);
 void		get_zoom(t_fdf *data, t_line *line);
 
-
 // #### DRAW
 
 void		pixel_to_img(t_fdf *data, int x, int y, int color);
@@ -137,5 +136,6 @@ int			handle_no_event(void *data);
 int			handle_keypress(int key, t_fdf *data);
 int			handle_keyrelease(int keysym, void *data);
 int			handle_close(t_fdf *data);
+void		destroy_everything(t_fdf *data);
 
 #endif

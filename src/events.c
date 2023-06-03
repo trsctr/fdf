@@ -6,12 +6,11 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 12:16:21 by trsctr            #+#    #+#             */
-/*   Updated: 2023/05/31 19:32:30 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/06/03 16:28:49 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
-#include <stdio.h>
 
 int	handle_no_event(void *data)
 {
@@ -19,9 +18,25 @@ int	handle_no_event(void *data)
 	return (0);
 }
 
+void	destroy_everything(t_fdf *data)
+{
+	int	y;
+
+	y = data->map.h;
+	mlx_destroy_image(data->mlx_ptr, data->image.img_ptr);
+	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	while (--y >= 0)
+	{
+		free(data->map.points[y]);
+	}
+	free((void *)data->map.points);
+
+
+}
+
 int	handle_close(t_fdf *data)
 {
-	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	destroy_everything(data);
 	exit (0);
 }
 
@@ -53,13 +68,12 @@ int	handle_keypress(int key, t_fdf *data)
 	ft_printf("Keypress: %d\n", key);
 	if (key == KEY_ESC)
 	{	
-		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-		ft_printf("lol imma exit\n");
+		destroy_everything(data);
 		exit (0);
 	}
 	if (key == KEY_RIGHT || key == KEY_LEFT || key == KEY_UP || key == KEY_DOWN
 		|| key == KEY_W || key == KEY_S || key == KEY_SPACE || key == KEY_A
-		|| key == KEY_Q )
+		|| key == KEY_Q)
 	{
 		handle_transform(key, data);
 	}

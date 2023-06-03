@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:47:46 by oandelin          #+#    #+#             */
-/*   Updated: 2023/05/31 19:26:26 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/06/03 15:14:47 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ t_fdf	new_window(t_fdf data)
 	data.win_w = WIN_W;
 	data.win_h = WIN_H;
 	data.win_ptr = mlx_new_window(data.mlx_ptr, data.win_w, data.win_h, "FDF");
+	set_defaults(&data);
 	return (data);
 }
 
@@ -25,6 +26,8 @@ t_img	new_image(int w, int h, t_fdf data)
 {
 	t_img	image;
 
+	if (data.image.imgdata)
+		mlx_destroy_image(data.mlx_ptr, data.image.img_ptr);
 	image.img_ptr = mlx_new_image(data.mlx_ptr, w, h);
 	image.imgdata = (int *)mlx_get_data_addr(image.img_ptr, &(image.bpp), \
 							&(image.line_len), &(image.endian));
