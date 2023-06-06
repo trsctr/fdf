@@ -6,19 +6,20 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 10:38:51 by trsctr            #+#    #+#             */
-/*   Updated: 2023/06/03 16:29:02 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/06/06 20:56:50 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
-t_fdf parse_map(t_fdf fdf, int fd)
+t_fdf	parse_map(t_fdf *fdf, int fd)
 {
 	char	*map_buffer;
 	char	**lines;
 	int		i;
 
 	i = 0;
+	map_buffer = ft_calloc(1, 1);
 	map_buffer = read_map(map_buffer, fd);
 	lines = ft_split(map_buffer, '\n');
 	free(map_buffer);
@@ -26,32 +27,38 @@ t_fdf parse_map(t_fdf fdf, int fd)
 	{
 		if ((lines[0][i + 1] == ' ' || !lines[0][i + 1])
 							&& ft_isalnum(lines[0][i]))
-		{	
-			fdf.map.w++;
-		}
+			fdf->map.w++;
 		i++;
 	}
-	while (lines[fdf.map.h])
-		fdf.map.h++;
-	fdf.map = convert_map(fdf.map, lines);
+	while (lines[fdf->map.h])
+		fdf->map.h++;
+	fdf->map = convert_map(fdf->map, lines);
+	destroy_strarr(lines);
 	free(lines);
-	close(fd);
-	return (fdf);
+	return (*fdf);
 }
 
 char	*read_map(char *map_buffer, int fd)
 {
+	char	*temp;
 	char	*next_line;
-	int		i;
 
-	map_buffer = ft_calloc(1,1);
 	next_line = get_next_line(fd);
 	while (next_line)
 	{
-		map_buffer = ft_strjoin(map_buffer, next_line);
+		temp = ft_strjoin(map_buffer, next_line);
+		if (map_buffer)
+			free(map_buffer);
 		free(next_line);
+		map_buffer = temp;
 		next_line = get_next_line(fd);
-		i++;
+	}
+	free(next_line);
+	close(fd);
+	if (map_buffer[0] == '\0')
+	{
+		ft_putendl_fd("Error reading map: map file not valid", 2);
+		exit(1);
 	}
 	return (map_buffer);
 }
@@ -59,7 +66,7 @@ char	*read_map(char *map_buffer, int fd)
 t_map	convert_map(t_map map, char **lines)
 {
 	char	**split_line;
-	int i;
+	int		i;
 
 	i = 0;
 	map.points = (t_point **)malloc(sizeof(t_map)
@@ -74,59 +81,46 @@ t_map	convert_map(t_map map, char **lines)
 	{
 		split_line = ft_split(lines[i], ' ');
 		map = fill_array(split_line, map, i);
+		destroy_strarr(split_line);
 		free(split_line);
-		free(lines[i]);
 		i++;
 	}
 	return (map);
 }
 
-// int parse_color(char *str)
-// {
-// 	int i;
-// 	int x;
-// 	int color;
-
-// 	i = ft_strlen(str);
-// 	while(i)
-// 	{
-// 		if (str[i] >= '0' && str[i] <= '9')
-// 			x = str[i] - '0'
-// 		else x = hex[i] - 'A' + 10;
-
-
-// }
-
 t_map	fill_array(char **line, t_map map, int row)
 {
-	int	col;
-//	char **split;
+	int		col;
 
 	col = 0;
 	while (line[col])
 	{
 		if (!ft_isdigit(line[col][0]) && line[col][0] != '-')
 		{
-			ft_printf("your map sucks bro\n");
+			ft_putendl_fd("Error reading map: map file not valid", 2);
 			exit(1);
 		}
 		map.points[row][col].z = ft_atoi(line[col]);
-		map.points[row][col].color = 0x00FFFFFF;
-		//else map.points[row][col].z = 0;
-		// if (ft_strchr(line[col], ','))
-		// {
-		// 	split = ft_split(line[col], ',');
-		// 	map.points[row][col].color = parse_color(split[1]);
-		// }
-		// else 
-		//
-		free(line[col]);
 		col++;
 	}
 	if (col != map.w)
 	{	
-	 	ft_printf("there must be something wrong with your map file, row: %d col: %d map.w = %d", row, col, map.w);
-	 	exit(0);
+		ft_putendl_fd("Error reading map: map file not valid", 2);
+		exit (1);
 	}
 	return (map);
+}
+
+void	destroy_strarr(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+		i++;
+	while (i >= 0)
+	{
+		free(arr[i]);
+		i--;
+	}
 }

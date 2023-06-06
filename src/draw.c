@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:53:04 by oandelin          #+#    #+#             */
-/*   Updated: 2023/06/03 16:30:07 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/06/06 20:56:27 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,8 @@
 
 void	pixel_to_img(t_fdf *data, int x, int y, int color)
 {
-	// tee jotenkin smoothimmin missa otetaan endian ja bpp huomioon jne
-	// ja error protection ettei piirreta kuvan ulkopuolelle
-
 	if ((x < WIN_W && y < WIN_H) && (x > 0 && y > 0))
 		data->image.imgdata[y * data->win_w + x] = color;
-	// pxl = image->imgdata + (y * image->line_len + x * (image->bpp / 8 ));
-	// *pxl = color;
 }
 
 void	bresenham(t_fdf *fdf, t_line *line)
@@ -28,9 +23,7 @@ void	bresenham(t_fdf *fdf, t_line *line)
 	double	x_delta;
 	double	y_delta;
 	int		pixels;
-	int		color;
 
-	color = 0xFFFFFF;
 	x_delta = line->x1 - line->x;
 	y_delta = line->y1 - line->y;
 	pixels = sqrt((x_delta * x_delta) + (y_delta * y_delta));
@@ -38,9 +31,7 @@ void	bresenham(t_fdf *fdf, t_line *line)
 	y_delta /= pixels;
 	while (pixels)
 	{
-		// jos haluaa gradientin, sille pitaa olla funktio tassa
-		// pitaa olla position counterina jotenkin tolle gradientille
-		pixel_to_img(fdf, line->x, line->y, color);
+		pixel_to_img(fdf, line->x, line->y, 0xFFFFFF);
 		line->x += x_delta;
 		line->y += y_delta;
 		pixels--;
@@ -67,11 +58,9 @@ void	draw_borders(t_fdf *data)
 	}
 }	
 
-
 void	draw(t_fdf *data)
 {
-	t_coords coordinates;
-	int	color;
+	t_coords	coordinates;
 
 	data->image = new_image(WIN_W, WIN_H, *data);
 	coordinates.y = 0;
@@ -91,4 +80,3 @@ void	draw(t_fdf *data)
 		data->image.img_ptr, 0, 0);
 	menu(*data);
 }
-

@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:49:04 by oandelin          #+#    #+#             */
-/*   Updated: 2023/06/03 15:10:46 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/06/06 20:48:41 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@
 # include <stdlib.h>
 # include <mlx.h>
 # include <math.h>
-// # include <X11/keysym.h>
-// # include <X11/X.h>
+# include <stdio.h>
 # define MLX_ERROR 1
 # define WIN_W 1024
 # define WIN_H 768
@@ -51,7 +50,6 @@ enum e_direction {
 
 typedef struct s_point {
 	int		z;
-	int		color;
 }	t_point;
 
 typedef struct s_coords {
@@ -80,6 +78,8 @@ typedef struct s_line {
 	double		y;
 	double		x1;
 	double		y1;
+	double		z;
+	double		z1;
 }	t_line;
 
 typedef struct s_fdf {
@@ -104,7 +104,7 @@ void		set_defaults(t_fdf *fdf);
 
 // #### READING THE MAP
 
-t_fdf		parse_map(t_fdf fdf, int fd);
+t_fdf		parse_map(t_fdf *fdf, int fd);
 char		*read_map(char *mapbuf, int fd);
 t_map		convert_map(t_map map, char **lines);
 t_map		fill_array(char **line, t_map map, int row);
@@ -114,6 +114,7 @@ void		project_line(t_fdf *fdf, t_coords coordinates, int direction);
 void		shift_line(t_fdf *fdf, t_line *line);
 void		isometric(t_line *line, t_fdf *data);
 void		get_zoom(t_fdf *data, t_line *line);
+void		get_z(t_line *line, t_fdf *data);
 
 // #### DRAW
 
@@ -122,20 +123,13 @@ void		draw(t_fdf *data);
 void		menu(t_fdf data);
 void		bresenham(t_fdf *fdf, t_line *line);
 
-// #### COLOR
+// #### EVENTS
 
-int			get_t(int color);
-int			get_r(int color);
-int			get_g(int color);
-int			get_b(int color);
-int			set_color(int transparency, int red, int green, int blue);
-
-// #### HOOKS
-
-int			handle_no_event(void *data);
 int			handle_keypress(int key, t_fdf *data);
-int			handle_keyrelease(int keysym, void *data);
 int			handle_close(t_fdf *data);
-void		destroy_everything(t_fdf *data);
+
+// #### FREE/DESTRO
+
+void		destroy_strarr(char **arr);
 
 #endif
