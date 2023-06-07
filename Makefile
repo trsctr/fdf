@@ -6,35 +6,38 @@
 #    By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/01 16:51:49 by oandelin          #+#    #+#              #
-#    Updated: 2023/06/06 20:55:41 by oandelin         ###   ########.fr        #
+#    Updated: 2023/06/07 13:00:59 by oandelin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME 	= fdf
-SRCS	= src/fdf.c src/init.c src/draw.c src/events.c src/parse_map.c src/projection.c
-HFILES = fdf.h
-HEADERS = $(addprefix $(INCDIR),$(HFILES))
-CC	= gcc
-CFLAGS	= -Wall -Werror -Wextra  
-INCFLAG	= $(addprefix -I,$(INCDIR))
+NAME 		= 	fdf
+CC			= 	cc
+CFLAGS		= 	-Wall -Werror -Wextra
+LIBFT 		= 	libft/libft.a
+SRCDIR		=	src/
+SRCFILES	= 	fdf.c init.c draw.c hooks.c parse_map.c projection.c
+LIBS		=	-lmlx -framework OpenGL -framework AppKit
+SRCS 		=	$(addprefix $(SRCDIR), $(SRCFILES))
 
-all: $(NAME)
+all: $(LIBFT) $(NAME)
 
-$(NAME): 
-	$(CC) $(CFLAGS) $(SRCS) -L. libft/libft.a -I libft/include -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+$(LIBFT):
+	@make -C libft
+
+$(NAME):
+	@echo "Compiling fdf.."
+	@$(CC) $(CFLAGS) $(SRCS) $(LIBFT) $(LIBS) -o $(NAME)
+	@echo "Done!"
 
 clean:
-	rm -f $(NAME)
+	@make clean -C libft
 
 fclean: clean
-	rm -f $(NAME)
+	@make fclean -C libft
+	@echo "Deleting binaries.."
+	@rm -f $(NAME)
+	@echo "Binaries deleted!"
 
 re: fclean all
 
-test:
-	$(CC) -g -L. libft/libft.a -I libft/include -lmlx -framework OpenGL -framework AppKit $(SRCS) -o $(NAME)
-
-testlinux:
-	$(CC) $(SRCS)  -L. libft/libft.a -I libft/include -Lmlx_Linux -lmlx_Linux -L/usr/lib -Imlx_Linux -lXext -lX11 -lm -lz -o $(NAME)
-
-.PHONY: all clean fclean re test
+.PHONY: all clean fclean re

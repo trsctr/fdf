@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:53:04 by oandelin          #+#    #+#             */
-/*   Updated: 2023/06/06 20:56:27 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/06/07 12:59:26 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,22 @@ void	pixel_to_img(t_fdf *data, int x, int y, int color)
 		data->image.imgdata[y * data->win_w + x] = color;
 }
 
-void	bresenham(t_fdf *fdf, t_line *line)
+void	bresenham(t_fdf *data, t_line *line)
 {
-	double	x_delta;
-	double	y_delta;
+	double	x_slope;
+	double	y_slope;
 	int		pixels;
 
-	x_delta = line->x1 - line->x;
-	y_delta = line->y1 - line->y;
-	pixels = sqrt((x_delta * x_delta) + (y_delta * y_delta));
-	x_delta /= pixels;
-	y_delta /= pixels;
+	x_slope = line->x1 - line->x;
+	y_slope = line->y1 - line->y;
+	pixels = sqrt(pow(x_slope, 2) + pow(y_slope, 2));
+	x_slope /= pixels;
+	y_slope /= pixels;
 	while (pixels)
 	{
-		pixel_to_img(fdf, line->x, line->y, 0xFFFFFF);
-		line->x += x_delta;
-		line->y += y_delta;
+		pixel_to_img(data, line->x, line->y, 0xFFFFFF);
+		line->x += x_slope;
+		line->y += y_slope;
 		pixels--;
 	}
 }
@@ -78,5 +78,5 @@ void	draw(t_fdf *data)
 	draw_borders(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
 		data->image.img_ptr, 0, 0);
-	menu(*data);
+	instructions(*data);
 }

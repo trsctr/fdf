@@ -6,14 +6,13 @@
 #    By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/01 16:51:49 by oandelin          #+#    #+#              #
-#    Updated: 2023/06/06 20:57:44 by oandelin         ###   ########.fr        #
+#    Updated: 2023/06/07 12:42:04 by oandelin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 	= libft.a
 INCLUDE	= include/
 SRCDIR	= src/
-OBJDIR	= obj/
 HEADER	= $(NAME:.a=.h)
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
@@ -73,22 +72,22 @@ OBJS 	= $(addsuffix .o, $(SRCFILES))
 all: $(NAME)
 
 $(NAME): $(SRCS)
-	@echo "Compiling.."
+	@echo "Compiling libft functions.."
 	@$(CC) $(CFLAGS) -I$(INCLUDE) -c $(SRCS)
-	@echo "Creating libft.a .."
+	@echo "Creating libft.a.."
 	@ar rcs $(NAME) $(OBJS)
-	@echo "Success!"
+	@echo "Done!"
 
 
 clean:
 	@echo "Cleaning libft object files.."
 	@rm -f $(OBJS)
-	@echo "Object files deleted"
+	@echo "Object files deleted!"
 
 fclean: clean
 	@echo "Removing libft.a"
 	@rm -f $(NAME)
-	@echo "Libft.a deleted"
+	@echo "Libft.a deleted!"
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 14:22:03 by oandelin          #+#    #+#             */
-/*   Updated: 2023/06/06 20:57:11 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/06/07 13:01:38 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,15 @@ void	isometric(t_line *line, t_fdf *data)
 	line->y1 = (temp_x1 + line->y1) * sin(data->angle) - line->z1;
 }
 
-void	shift_line(t_fdf *fdf, t_line *line)
+void	shift_line(t_fdf *data, t_line *line)
 {
-	line->x += fdf->shift_x;
-	line->y += fdf->shift_y;
-	line->x1 += fdf->shift_x;
-	line->y1 += fdf->shift_y;
+	line->x += data->shift_x;
+	line->y += data->shift_y;
+	line->x1 += data->shift_x;
+	line->y1 += data->shift_y;
 }
 
-void	project_line(t_fdf *fdf, t_coords coordinates, int direction)
+void	project_line(t_fdf *data, t_coords coordinates, int direction)
 {
 	t_line	line;
 
@@ -78,9 +78,9 @@ void	project_line(t_fdf *fdf, t_coords coordinates, int direction)
 		line.x1 = line.x;
 		line.y1 = line.y + 1;
 	}
-	get_z(&line, fdf);
-	isometric(&line, fdf);
-	get_zoom(fdf, &line);
-	shift_line(fdf, &line);
-	bresenham(fdf, &line);
+	get_z(&line, data);
+	isometric(&line, data);
+	get_zoom(data, &line);
+	shift_line(data, &line);
+	bresenham(data, &line);
 }

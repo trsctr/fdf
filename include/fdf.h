@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:49:04 by oandelin          #+#    #+#             */
-/*   Updated: 2023/06/06 20:48:41 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/06/07 13:00:41 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,18 +100,20 @@ typedef struct s_fdf {
 
 t_fdf		new_window(t_fdf data);
 t_img		new_image(int w, int h, t_fdf data);
-void		set_defaults(t_fdf *fdf);
+void		set_defaults(t_fdf *data);
 
 // #### READING THE MAP
 
-t_fdf		parse_map(t_fdf *fdf, int fd);
+t_fdf		parse_map(t_fdf *data, int fd);
 char		*read_map(char *mapbuf, int fd);
 t_map		convert_map(t_map map, char **lines);
 t_map		fill_array(char **line, t_map map, int row);
+void		destroy_strarr(char **arr);
 
 // #### PROJECTION
-void		project_line(t_fdf *fdf, t_coords coordinates, int direction);
-void		shift_line(t_fdf *fdf, t_line *line);
+
+void		project_line(t_fdf *data, t_coords coordinates, int direction);
+void		shift_line(t_fdf *data, t_line *line);
 void		isometric(t_line *line, t_fdf *data);
 void		get_zoom(t_fdf *data, t_line *line);
 void		get_z(t_line *line, t_fdf *data);
@@ -120,16 +122,12 @@ void		get_z(t_line *line, t_fdf *data);
 
 void		pixel_to_img(t_fdf *data, int x, int y, int color);
 void		draw(t_fdf *data);
-void		menu(t_fdf data);
-void		bresenham(t_fdf *fdf, t_line *line);
+void		bresenham(t_fdf *data, t_line *line);
+void		instructions(t_fdf data);
 
-// #### EVENTS
+// #### HOOKS
 
 int			handle_keypress(int key, t_fdf *data);
 int			handle_close(t_fdf *data);
-
-// #### FREE/DESTRO
-
-void		destroy_strarr(char **arr);
 
 #endif

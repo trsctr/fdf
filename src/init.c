@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:47:46 by oandelin          #+#    #+#             */
-/*   Updated: 2023/06/06 18:27:08 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/06/07 13:12:45 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,19 @@
 t_fdf	new_window(t_fdf data)
 {
 	data.mlx_ptr = mlx_init();
+	if (!data.mlx_ptr)
+	{
+		ft_printf("Failed to initialize graphic library, exiting..");
+		exit(1);
+	}
 	data.win_w = WIN_W;
 	data.win_h = WIN_H;
 	data.win_ptr = mlx_new_window(data.mlx_ptr, data.win_w, data.win_h, "FDF");
+	if (!data.win_ptr)
+	{
+		ft_printf("Failed to initialize graphic library, exiting..");
+		exit(1);
+	}
 	set_defaults(&data);
 	return (data);
 }
@@ -36,16 +46,16 @@ t_img	new_image(int w, int h, t_fdf data)
 	return (image);
 }
 
-void	set_defaults(t_fdf *fdf)
+void	set_defaults(t_fdf *data)
 {
-	fdf->zoom = 35;
-	fdf->angle = 0.53;
-	fdf->shift_x = WIN_W / 3;
-	fdf->shift_y = WIN_H / 6;
-	fdf->z_factor = 1;
+	data->zoom = 35;
+	data->angle = 0.53;
+	data->shift_x = WIN_W / 3;
+	data->shift_y = WIN_H / 6;
+	data->z_factor = 1;
 }
 
-void	menu(t_fdf data)
+void	instructions(t_fdf data)
 {
 	char	*line1;
 	char	*line2;

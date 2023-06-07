@@ -6,13 +6,13 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 10:38:51 by trsctr            #+#    #+#             */
-/*   Updated: 2023/06/06 20:56:50 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/06/07 13:02:37 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
-t_fdf	parse_map(t_fdf *fdf, int fd)
+t_fdf	parse_map(t_fdf *data, int fd)
 {
 	char	*map_buffer;
 	char	**lines;
@@ -27,15 +27,15 @@ t_fdf	parse_map(t_fdf *fdf, int fd)
 	{
 		if ((lines[0][i + 1] == ' ' || !lines[0][i + 1])
 							&& ft_isalnum(lines[0][i]))
-			fdf->map.w++;
+			data->map.w++;
 		i++;
 	}
-	while (lines[fdf->map.h])
-		fdf->map.h++;
-	fdf->map = convert_map(fdf->map, lines);
+	while (lines[data->map.h])
+		data->map.h++;
+	data->map = convert_map(data->map, lines);
 	destroy_strarr(lines);
 	free(lines);
-	return (*fdf);
+	return (*data);
 }
 
 char	*read_map(char *map_buffer, int fd)
