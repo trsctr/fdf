@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:47:46 by oandelin          #+#    #+#             */
-/*   Updated: 2023/06/07 13:12:45 by oandelin         ###   ########.fr       */
+/*   Updated: 2023/06/07 13:28:35 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_fdf	new_window(t_fdf data)
 	data.mlx_ptr = mlx_init();
 	if (!data.mlx_ptr)
 	{
-		ft_printf("Failed to initialize graphic library, exiting..");
+		ft_putendl_fd("Failed to initialize graphic library", 2);
 		exit(1);
 	}
 	data.win_w = WIN_W;
@@ -25,7 +25,7 @@ t_fdf	new_window(t_fdf data)
 	data.win_ptr = mlx_new_window(data.mlx_ptr, data.win_w, data.win_h, "FDF");
 	if (!data.win_ptr)
 	{
-		ft_printf("Failed to initialize graphic library, exiting..");
+		ft_putendl_fd("Failed to initialize graphic library", 2);
 		exit(1);
 	}
 	set_defaults(&data);
