@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:49:04 by oandelin          #+#    #+#             */
-/*   Updated: 2024/09/26 14:17:33 by oandelin         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:44:47 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,28 +20,29 @@
 # include "../minilibx-linux/mlx.h"
 # include <math.h>
 # include <stdio.h>
+# include "keys.h"
 # define MLX_ERROR 1
 # define WIN_W 1024
 # define WIN_H 768
 
 enum e_events{
 	ON_CLOSE = 17,
-	ON_KEYPRESS = 02,
-	ON_KEYRELEASE = 03
+	ON_KEYPRESS = 2,
+	ON_KEYRELEASE = 3
 };
 
-enum e_keys {
-	KEY_ESC = 53,
-	KEY_LEFT = 123,
-	KEY_RIGHT = 124,
-	KEY_DOWN = 125,
-	KEY_UP = 126,
-	KEY_W = 13,
-	KEY_S = 1,
-	KEY_A = 0,
-	KEY_Q = 12,
-	KEY_SPACE = 49
-};
+// enum e_keys {
+// 	KEY_ESC = 53,
+// 	KEY_LEFT = 123,
+// 	KEY_RIGHT = 124,
+// 	KEY_DOWN = 125,
+// 	KEY_UP = 126,
+// 	KEY_W = 13,
+// 	KEY_S = 1,
+// 	KEY_A = 0,
+// 	KEY_Q = 12,
+// 	KEY_SPACE = 49
+// };
 
 enum e_direction {
 	HORIZONTAL = 0,
@@ -67,7 +68,7 @@ typedef struct s_img {
 	void		*img_ptr;
 	int			*imgdata;
 	int			w;
-	int			h;
+	int			h;//
 	int			bpp;
 	int			endian;
 	int			line_len;

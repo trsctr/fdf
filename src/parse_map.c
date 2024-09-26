@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 10:38:51 by trsctr            #+#    #+#             */
-/*   Updated: 2024/09/26 14:31:59 by oandelin         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:44:42 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ t_fdf	parse_map(t_fdf *data, int fd)
 			data->map.w++;
 		i++;
 	}
-	printf("data->map.h: %d\n", data->map.h);
-	printf("lines[0]: %s\n", lines[0]);
 	while (lines[data->map.h] != NULL)
 		data->map.h++;
 	data->map = convert_map(data->map, lines);

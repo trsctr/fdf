@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oandelin <oandelin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:47:46 by oandelin          #+#    #+#             */
-/*   Updated: 2023/06/07 13:28:35 by oandelin         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:34:12 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_fdf	new_window(t_fdf data)
 		ft_putendl_fd("Failed to initialize graphic library", 2);
 		exit(1);
 	}
+	data.image.imgdata = NULL;
 	set_defaults(&data);
 	return (data);
 }
@@ -36,7 +37,7 @@ t_img	new_image(int w, int h, t_fdf data)
 {
 	t_img	image;
 
-	if (data.image.imgdata)
+	if (data.image.imgdata != NULL)
 		mlx_destroy_image(data.mlx_ptr, data.image.img_ptr);
 	image.img_ptr = mlx_new_image(data.mlx_ptr, w, h);
 	image.imgdata = (int *)mlx_get_data_addr(image.img_ptr, &(image.bpp), \
@@ -68,7 +69,7 @@ void	instructions(t_fdf data)
 	line3 = "Press Q and A to transform altitude difference";
 	line4 = "Press SPACE to reset settings";
 	line5 = "Press ESC to exit";
-	mlx_string_put(data.mlx_ptr, data.win_ptr, 10, 5, 0xFFFFFFF, "Le FDF");
+	mlx_string_put(data.mlx_ptr, data.win_ptr, 10, 10, 0xFFFFFFF, "Le FDF");
 	mlx_string_put(data.mlx_ptr, data.win_ptr, 10, WIN_H -110,
 		0xFFFFFFF, line1);
 	mlx_string_put(data.mlx_ptr, data.win_ptr, 10, WIN_H -90, 0xFFFFFFF, line2);

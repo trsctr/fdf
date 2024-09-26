@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oandelin <oandelin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 17:10:59 by oandelin          #+#    #+#             */
-/*   Updated: 2023/06/07 13:09:08 by oandelin         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:33:27 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv)
 	data = parse_map(&data, fd);
 	data = new_window(data);
 	draw(&data);
+	mlx_hook(data.win_ptr, ON_KEYPRESS, (1L<<0), &handle_keypress, &data);
 	mlx_hook(data.win_ptr, ON_CLOSE, 0, &handle_close, &data);
-	mlx_hook(data.win_ptr, ON_KEYPRESS, 0, &handle_keypress, &data);
 	mlx_loop(data.mlx_ptr);
 }

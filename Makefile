@@ -6,7 +6,7 @@
 #    By: oandelin <oandelin@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/01 16:51:49 by oandelin          #+#    #+#              #
-#    Updated: 2024/09/26 14:19:18 by oandelin         ###   ########.fr        #
+#    Updated: 2024/09/26 14:36:51 by oandelin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ $(NAME):
 
 clean:
 	@make clean -C libft
+	@make clean -C $(MLX_DIR)
 
 fclean: clean
 	@make fclean -C libft
