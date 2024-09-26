@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 17:10:59 by oandelin          #+#    #+#             */
-/*   Updated: 2024/09/26 15:33:27 by oandelin         ###   ########.fr       */
+/*   Updated: 2024/09/26 20:00:05 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 	{
 		ft_printf("Invalid arguments.\nExample: ./fdf map_dir/map.fdf\n");
+		return (1);
+	}
+	if (ft_strnstr(argv[1] + ft_strlen(argv[1]) - 4, ".fdf", 4) == NULL)
+	{
+		ft_printf("Invalid file type.\nExample: ./fdf map_dir/map.fdf\n");
 		return (1);
 	}
 	fd = open(argv[1], O_RDONLY);
