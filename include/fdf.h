@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oandelin <oandelin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:49:04 by oandelin          #+#    #+#             */
-/*   Updated: 2023/06/07 13:00:41 by oandelin         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:17:33 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <stdlib.h>
-# include <mlx.h>
+# include "../minilibx-linux/mlx.h"
 # include <math.h>
 # include <stdio.h>
 # define MLX_ERROR 1

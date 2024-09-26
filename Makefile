@@ -3,30 +3,31 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+         #
+#    By: oandelin <oandelin@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/01 16:51:49 by oandelin          #+#    #+#              #
-#    Updated: 2023/06/07 13:00:59 by oandelin         ###   ########.fr        #
+#    Updated: 2024/09/26 14:19:18 by oandelin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		= 	fdf
 CC			= 	cc
-CFLAGS		= 	-Wall -Werror -Wextra
-LIBFT 		= 	libft/libft.a
+CFLAGS		= 	-Wall -Werror -Wextra -fsanitize=address -g
 SRCDIR		=	src/
 SRCFILES	= 	fdf.c init.c draw.c hooks.c parse_map.c projection.c
-LIBS		=	-lmlx -framework OpenGL -framework AppKit
+MLX_DIR		=	minilibx-linux
+LIBS		=	-lm libft/libft.a $(MLX_DIR)/libmlx.a -lXext -lX11
 SRCS 		=	$(addprefix $(SRCDIR), $(SRCFILES))
 
-all: $(LIBFT) $(NAME)
+all: $(NAME)
 
-$(LIBFT):
-	@make -C libft
 
 $(NAME):
+	@make -C libft
+	@echo "Compiling mlx library.."
+	@make -C $(MLX_DIR)
 	@echo "Compiling fdf.."
-	@$(CC) $(CFLAGS) $(SRCS) $(LIBFT) $(LIBS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(SRCS) $(LIBS) -o $(NAME)
 	@echo "Done!"
 
 clean:

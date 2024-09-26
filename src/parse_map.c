@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oandelin <oandelin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oandelin <oandelin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 10:38:51 by trsctr            #+#    #+#             */
-/*   Updated: 2023/06/07 13:02:37 by oandelin         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:31:59 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ t_fdf	parse_map(t_fdf *data, int fd)
 	int		i;
 
 	i = 0;
+	data->map.h = 0;
+	data->map.w = 0;
 	map_buffer = ft_calloc(1, 1);
 	map_buffer = read_map(map_buffer, fd);
 	lines = ft_split(map_buffer, '\n');
@@ -30,7 +32,9 @@ t_fdf	parse_map(t_fdf *data, int fd)
 			data->map.w++;
 		i++;
 	}
-	while (lines[data->map.h])
+	printf("data->map.h: %d\n", data->map.h);
+	printf("lines[0]: %s\n", lines[0]);
+	while (lines[data->map.h] != NULL)
 		data->map.h++;
 	data->map = convert_map(data->map, lines);
 	destroy_strarr(lines);
