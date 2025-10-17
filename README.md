@@ -32,7 +32,7 @@ FdF renders a 3D wireframe from a heightmap (saved as a `.fdf` file) and allows 
 ### Building the Project
 
    ```bash
-   git clone https://github.com/yourusername/fdf.git
+   git clone https://github.com/trsctr/fdf.git
    cd fdf
    make
    ./fdf [path_to_fdf_file]
