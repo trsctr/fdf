@@ -19,8 +19,8 @@ FdF renders a 3D wireframe from a heightmap (saved as a `.fdf` file) and allows 
 ## 🛠️ Languages/Tools
 
 - **C**
-- **MinilibX**: A simple, low-level graphical library for X-Window (included in the repo)
-- **Makefile**: For automated building and dependency management.
+- **MinilibX**: A simple, low-level graphical library for X-Window (https://github.com/42Paris/minilibx-linux)
+- **Makefile**: For automated building and dependency management. Automatically clones MinilibX if not present.
 
 ## 🚀 Installation
 
