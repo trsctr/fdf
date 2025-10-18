@@ -30,8 +30,14 @@ $(LIBFT):
 	@make -C libft
 
 $(MINILIBX):
-	@echo "Compiling mlx library.."
-	@make -C $(MLX_DIR)
+	@if [ ! -d "$(MLX_DIR)" ]; then \
+		echo "Cloning minilibx-linux..."; \
+		git clone https://github.com/42Paris/minilibx-linux.git $(MLX_DIR); \
+	fi
+	@if [ ! -f "$(MINILIBX)" ]; then \
+		echo "Compiling mlx library..."; \
+		make -C $(MLX_DIR); \
+	fi
 
 $(NAME): $(LIBFT) $(MINILIBX) $(SRCS) $(HEADER)
 	@echo "Compiling fdf.."
@@ -47,6 +53,7 @@ fclean: clean
 	@echo "Deleting binaries.."
 	@rm -f $(NAME)
 	@echo "Binaries deleted!"
+	@echo "NOTE: minilibx-linux directory kept (re-clone with: rm -rf minilibx-linux and then run make)"
 
 re: fclean all
 
