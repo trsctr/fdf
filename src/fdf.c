@@ -6,11 +6,12 @@
 /*   By: oandelin <oandelin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 17:10:59 by oandelin          #+#    #+#             */
-/*   Updated: 2024/09/26 20:00:05 by oandelin         ###   ########.fr       */
+/*   Updated: 2025/10/20 18:24:42 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
+#include <time.h>
 
 int	main(int argc, char **argv)
 {
@@ -33,8 +34,10 @@ int	main(int argc, char **argv)
 		perror("Error opening file");
 		return (1);
 	}
+
 	ft_printf("Loading map..\n");
-	data = parse_map(&data, fd);
+	parse_map(&data, fd);
+	close(fd);
 	data = new_window(data);
 	draw(&data);
 	mlx_hook(data.win_ptr, ON_KEYPRESS, (1L<<0), &handle_keypress, &data);

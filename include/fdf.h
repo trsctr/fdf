@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:49:04 by oandelin          #+#    #+#             */
-/*   Updated: 2025/10/20 12:56:37 by oandelin         ###   ########.fr       */
+/*   Updated: 2025/10/20 18:25:03 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,13 +105,15 @@ void		set_defaults(t_fdf *data);
 
 // #### READING THE MAP
 
-t_fdf		parse_map(t_fdf *data, int fd);
-char		*read_map(char *mapbuf, int fd);
-t_map		convert_map(t_map map, char **lines);
-t_map		fill_array(char **line, t_map map, int row);
+void		parse_map(t_fdf *data, int fd);
+void		fill_array(char **line, t_map *map, int row);
 void		destroy_strarr(char **arr);
 t_list		*read_lines(int fd);
 void		free_lines(t_list *lines);
+int		count_tokens(const char *line);
+int		get_map_size(t_list *lines, int *width, int *height);
+void	convert_lines_to_map(t_map *map, t_list *lines);
+int		is_empty_line(const char *line);
 
 // #### PROJECTION
 

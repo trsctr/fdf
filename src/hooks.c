@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 12:16:21 by trsctr            #+#    #+#             */
-/*   Updated: 2024/09/26 15:34:43 by oandelin         ###   ########.fr       */
+/*   Updated: 2025/10/20 18:29:13 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	handle_close(t_fdf *data)
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	mlx_destroy_display(data->mlx_ptr);
 	free(data->mlx_ptr);
+	free(data->map.points[0]);
+	free(data->map.points);
 	exit (0);
 }
 
