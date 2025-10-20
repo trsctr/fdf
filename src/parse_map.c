@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 10:38:51 by trsctr            #+#    #+#             */
-/*   Updated: 2024/09/26 15:44:42 by oandelin         ###   ########.fr       */
+/*   Updated: 2025/10/20 13:40:13 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,32 @@ t_fdf	parse_map(t_fdf *data, int fd)
 	destroy_strarr(lines);
 	free(lines);
 	return (*data);
+}
+
+t_list	*read_lines(int fd) {
+	t_list	*head;
+	t_list	*new_node;
+	char	*line;
+
+	head = NULL;
+	line = get_next_line(fd);
+	while (line)
+	{
+		new_node = ft_lstnew(line);
+		if (!new_node)
+		{
+			ft_putendl_fd("Error reading map: map file not valid", 2);
+			exit(1);
+		}
+		ft_lstadd_back(&head, new_node);
+		line = get_next_line(fd);
+	}
+	free(line);
+	return (head);
+}
+
+void free_lines(t_list *lines) {
+	ft_lstclear(&lines, free);
 }
 
 char	*read_map(char *map_buffer, int fd)

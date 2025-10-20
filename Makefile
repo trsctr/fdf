@@ -6,7 +6,7 @@
 #    By: oandelin <oandelin@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/01 16:51:49 by oandelin          #+#    #+#              #
-#    Updated: 2024/09/26 20:09:47 by oandelin         ###   ########.fr        #
+#    Updated: 2025/10/20 13:04:11 by oandelin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,10 @@ MLX_DIR		=	minilibx-linux/
 LIBFT 		= 	libft/libft.a
 MINILIBX	=	$(MLX_DIR)/libmlx.a
 LIBS		=	-lm libft/libft.a $(MINILIBX) -lXext -lX11
+PARSER_SRCS := src/parse_map.c
+PARSER_OBJS := $(PARSER_SRCS:.c=.o)
+TEST_SRCS := tests/runner.c tests/test_helpers.c tests/test_read_lines.c
+TEST_OBJS := $(TEST_SRCS:.c=.o)
 
 all: $(LIBFT) $(MINILIBX) $(NAME)
 
@@ -57,4 +61,10 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+test: $(LIBFT) $(TEST_OBJS) $(PARSER_OBJS)
+	$(CC) $(CFLAGS) -o test_runner $(TEST_OBJS) $(PARSER_OBJS) $(LIBFT) -lm -fsanitize=address,undefined
+	./test_runner
+
+CFLAGS += -Iinclude -DTEST
+
+.PHONY: all clean fclean re test

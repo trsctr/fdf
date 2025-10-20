@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:49:04 by oandelin          #+#    #+#             */
-/*   Updated: 2024/09/26 15:44:47 by oandelin         ###   ########.fr       */
+/*   Updated: 2025/10/20 12:56:37 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ char		*read_map(char *mapbuf, int fd);
 t_map		convert_map(t_map map, char **lines);
 t_map		fill_array(char **line, t_map map, int row);
 void		destroy_strarr(char **arr);
+t_list		*read_lines(int fd);
+void		free_lines(t_list *lines);
 
 // #### PROJECTION
 
