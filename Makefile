@@ -6,7 +6,7 @@
 #    By: oandelin <oandelin@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/01 16:51:49 by oandelin          #+#    #+#              #
-#    Updated: 2025/10/20 18:26:02 by oandelin         ###   ########.fr        #
+#    Updated: 2025/10/20 18:39:48 by oandelin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ MLX_DIR		=	minilibx-linux/
 LIBFT 		= 	libft/libft.a
 MINILIBX	=	$(MLX_DIR)/libmlx.a
 LIBS		=	-lm libft/libft.a $(MINILIBX) -lXext -lX11
-PARSER_SRCS := src/parse_map.c
+PARSER_SRCS := src/parser.c src/parser_helpers.c
 PARSER_OBJS := $(PARSER_SRCS:.c=.o)
 TEST_SRCS := tests/runner.c tests/test_helpers.c tests/test_convert_lines_to_map.c tests/test_get_map_size.c tests/test_count_tokens.c tests/test_read_lines.c
 TEST_OBJS := $(TEST_SRCS:.c=.o)
@@ -50,6 +50,7 @@ $(NAME): $(LIBFT) $(MINILIBX) $(SRCS) $(HEADER)
 
 clean:
 	@make clean -C libft
+	@rm -f $(PARSER_OBJS) $(TEST_OBJS)
 
 fclean: clean
 	@make fclean -C libft
