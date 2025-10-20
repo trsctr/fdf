@@ -6,7 +6,7 @@
 /*   By: oandelin <oandelin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 10:38:51 by trsctr            #+#    #+#             */
-/*   Updated: 2025/10/20 13:40:13 by oandelin         ###   ########.fr       */
+/*   Updated: 2025/10/20 15:46:09 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,64 @@ void free_lines(t_list *lines) {
 	ft_lstclear(&lines, free);
 }
 
+int count_tokens(const char *line) {
+	int count;
+	int in_token;
+
+	count = 0;
+	in_token = 0;
+	while(*line && *line != '\n') {
+		if (*line == ' ' || *line == '\t') {
+			in_token = 0;
+		}
+		else if (!in_token && (ft_isalnum(*line))) {
+			in_token = 1;
+			count++;
+		}
+		line++;
+	}
+	return count;
+}
+
+int is_empty_line(const char *line) {
+	while (*line) {
+		if (*line != ' ' && *line != '\t' && *line != '\n') {
+			return 0;
+		}
+		line++;
+	}
+	return 1;
+}
+
+int get_map_size(t_list *lines, int *width, int *height) {
+	int w;
+	int h;
+	int current_w;
+
+	h = 0;
+	w = 0;
+	while(lines) {
+		char *line = lines->content;
+		if (!line || is_empty_line(line)) {
+			lines = lines->next;
+			continue;
+		}
+		current_w = count_tokens(line);
+		if (w == 0) {
+			w = current_w;
+		} else if (current_w != w) {
+			ft_putendl_fd("Error reading map: inconsistent row lengths", 2);
+			return -1;
+		}
+		h++;
+		lines = lines->next;
+	}
+	*width = w;
+	*height = h;
+	return 0;
+}
+
+
 char	*read_map(char *map_buffer, int fd)
 {
 	char	*temp;
@@ -91,6 +149,34 @@ char	*read_map(char *map_buffer, int fd)
 	return (map_buffer);
 }
 
+void convert_lines_to_map(t_map *map, t_list *lines) {
+	t_list *current;
+	char **split_line;
+	int i;
+
+	i = 0;
+	map->points = (t_point **)malloc(sizeof(t_point*) * (map->h));
+	while (i < map->h) {
+		map->points[i] = (t_point *) malloc(sizeof(t_point) * (map->w));
+		i++;
+	}
+	i = 0;
+	current = lines;
+	while (current) {
+		if (is_empty_line(current->content)) {
+			current = current->next;
+			continue;
+		}
+		split_line = ft_split(current->content, ' ');
+	 	fill_array(split_line, map, i);
+	 	destroy_strarr(split_line);
+		free(split_line);
+	 	i++;
+		current = current->next;
+	}
+}
+
+
 t_map	convert_map(t_map map, char **lines)
 {
 	char	**split_line;
@@ -108,7 +194,7 @@ t_map	convert_map(t_map map, char **lines)
 	while (lines[i])
 	{
 		split_line = ft_split(lines[i], ' ');
-		map = fill_array(split_line, map, i);
+		fill_array(split_line, &map, i);
 		destroy_strarr(split_line);
 		free(split_line);
 		i++;
@@ -116,7 +202,7 @@ t_map	convert_map(t_map map, char **lines)
 	return (map);
 }
 
-t_map	fill_array(char **line, t_map map, int row)
+void	fill_array(char **line, t_map *map, int row)
 {
 	int		col;
 
@@ -128,15 +214,14 @@ t_map	fill_array(char **line, t_map map, int row)
 			ft_putendl_fd("Error reading map: map file not valid", 2);
 			exit(1);
 		}
-		map.points[row][col].z = ft_atoi(line[col]);
+		map->points[row][col].z = ft_atoi(line[col]);
 		col++;
 	}
-	if (col != map.w)
+	if (col != map->w)
 	{	
 		ft_putendl_fd("Error reading map: map file not valid", 2);
 		exit (1);
 	}
-	return (map);
 }
 
 void	destroy_strarr(char **arr)
