@@ -6,17 +6,19 @@
 /*   By: oandelin <oandelin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 18:22:39 by oandelin          #+#    #+#             */
-/*   Updated: 2025/10/20 18:23:50 by oandelin         ###   ########.fr       */
+/*   Updated: 2025/10/20 18:49:05 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
-void free_lines(t_list *lines) {
+void free_lines(t_list *lines)
+{
 	ft_lstclear(&lines, free);
 }
 
-int count_tokens(const char *line) {
+int count_tokens(const char *line)
+{
 	int count;
 	int in_token;
 
@@ -35,7 +37,8 @@ int count_tokens(const char *line) {
 	return count;
 }
 
-int is_empty_line(const char *line) {
+int is_empty_line(const char *line)
+{
 	while (*line) {
 		if (*line != ' ' && *line != '\t' && *line != '\n') {
 			return 0;
@@ -59,7 +62,8 @@ void	destroy_strarr(char **arr)
 	}
 }
 
-int get_map_size(t_list *lines, int *width, int *height) {
+int get_map_size(t_list *lines, int *width, int *height)
+{
 	int w;
 	int h;
 	int current_w;

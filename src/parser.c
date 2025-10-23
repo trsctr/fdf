@@ -6,13 +6,14 @@
 /*   By: oandelin <oandelin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 10:38:51 by trsctr            #+#    #+#             */
-/*   Updated: 2025/10/20 18:23:39 by oandelin         ###   ########.fr       */
+/*   Updated: 2025/10/23 19:01:02 by oandelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
-void parse_map(t_fdf *data, int fd) {
+void parse_map(t_fdf *data, int fd)
+{
 	t_list	*lines;
 
 	lines = read_lines(fd);
@@ -21,12 +22,12 @@ void parse_map(t_fdf *data, int fd) {
 		
 		exit(1);
 	}
-	ft_printf("Map size: width=%d, height=%d\n", data->map.w, data->map.h);
 	convert_lines_to_map(&data->map, lines);
 	free_lines(lines);
 }
 
-t_list	*read_lines(int fd) {
+t_list	*read_lines(int fd)
+{
 	t_list	*head;
 	t_list	*new_node;
 	t_list  *tail;
@@ -53,7 +54,8 @@ t_list	*read_lines(int fd) {
 	return (head);
 }
 
-void convert_lines_to_map(t_map *map, t_list *lines) {
+void convert_lines_to_map(t_map *map, t_list *lines)
+{
 	t_list *current;
 	char **split_line;
 	int i;
