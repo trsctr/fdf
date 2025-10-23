@@ -13,8 +13,7 @@ FdF renders a 3D wireframe from a heightmap (saved as a `.fdf` file) and allows 
 
 - 3D Wireframe Rendering: Visualizes 3D height maps from input files (examples included in `test_maps/` directory)
 - 3D Translations: Allows users to move, zoom, and adjust the map's altitude scale.
-- Reset View: Quickly revert to default zoom and altitude settings.
-- Supports moderately sized maps (tested up to 1000x1000), with performance dropping on larger maps.
+- Reset View: Quickly revert to default zoom, position and altitude settings.
 
 ## 🛠️ Languages/Tools
 
@@ -46,7 +45,3 @@ FdF renders a 3D wireframe from a heightmap (saved as a `.fdf` file) and allows 
 - **SPACE**: Reset settings
 - **ESC**: Exit the program
 
-## ❗ Known Issues
-
-- **macOS**: Due to untested changes, macOS support is currently unavailable.
-- **performance drop on larger map**: Performance drops on larger maps; I plan to optimize the map loader in the future.
